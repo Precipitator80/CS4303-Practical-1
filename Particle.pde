@@ -1,5 +1,5 @@
 // a representation of a point mass
-abstract class Particle extends Destructible {
+abstract class Particle extends GameObject {
     
     //Vectors to hold pos, vel
     //I'm allowing public access to keep things snappy.
@@ -14,13 +14,10 @@ abstract class Particle extends Destructible {
     //If you do need the mass, here it is:
     public float getMass() {return 1 / invMass;}
     
-    color col;
-    
-    Particle(int x, int y, PVector velocity, float invM, color col) {
+    Particle(int x, int y, PVector velocity, float invM) {
         super(x, y);
         this.velocity = velocity;
         invMass = invM;    
-        this.col = col;
         
         forceRegistry.add(this, gravity);
         //forceRegistry.add(this, drag);
@@ -49,6 +46,10 @@ abstract class Particle extends Destructible {
         // Clear the force accumulator.
         forceAccumulator.x = 0;
         forceAccumulator.y = 0;
+    }
+    
+    void update() {
+        integrate();
         
         // Destroy the particle if it goes out of bounds horizontally.
         if (position.x < 0) {
@@ -56,21 +57,6 @@ abstract class Particle extends Destructible {
         }   
         if (position.x > width) {
             destroy();
-        }
-    }
-    
-    void update() {
-        if (!destroyed) {
-            integrate();
-        }
-    }
-    
-    // For now just render all particles the same. Should be made abstract later.
-    void render() {
-        if (!destroyed) {
-            stroke(col);
-            fill(col);
-            ellipse(position.x, position.y, 5, 5);
         }
     }
 }

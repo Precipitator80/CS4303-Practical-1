@@ -3,6 +3,7 @@
 // START SETTINGS
 
 import java.util.LinkedList;
+import java.util.concurrent.LinkedTransferQueue;
 
 //// Final values
 final color RED = color(255,45,50);
@@ -15,12 +16,11 @@ final color BLUE = color(45,60,190);
 final ForceRegistry forceRegistry = new ForceRegistry();
 
 //Create a gravitational force
-Gravity gravity = new Gravity(new PVector(0f,.0001f));
+final Gravity gravity = new Gravity(new PVector(0f,.0001f));
 
 //Create a drag force
-//NB Increase k1, k2 to see an effect 
-//Drag drag = new Drag(10, 10) ;
-Drag drag = new Drag(0.003f, 0.003f);
+//NB Increase k1, k2 to see an effect
+final Drag drag = new Drag(0.003f, 0.003f);
 
 int NO_BALLISTAS = 3;
 int NO_CITIES = 6;
@@ -29,8 +29,9 @@ color playerColour = BLUE;
 color enemyColour = GREEN;
 
 //// Late initialisation.
-LinkedList<Bomb> bombs;
 LinkedList<Asteroid> asteroids;
+LinkedList<Bomb> bombs;
+private LinkedTransferQueue<GameObject> gameObjects;
 Ballista[] ballistas;
 City[] cities;
 int selectedBallista;
@@ -44,17 +45,18 @@ double ms_per_update;
 // initialise screen and particle array
 void setup() {
     //size(200, 200) ;
-    size(500, 500);
-    //size(1700,1000);
+    //size(500, 500);
+    size(1700,1000);
     
-    //Static graphics.
-    groundHeight = (int)(0.95f * height); // Draw a line for the ground.
+    // Set the ground height.
+    groundHeight = (int)(0.95f * height);
     
-    
-    //Initialise a list to hold bombs. 
+    // Initialise lists. 
+    asteroids = new LinkedList<Asteroid>();
     bombs = new LinkedList<Bomb>();
+    gameObjects = new LinkedTransferQueue<GameObject>();
     
-    //Place ballistas on the screen and select the middle one.
+    // Place ballistas on the screen and select the middle one.
     ballistas = new Ballista[NO_BALLISTAS];
     for (int i = 0; i < ballistas.length; i++) {
         int xOffset = (int)(0.1f * width);
@@ -63,7 +65,9 @@ void setup() {
         ballistas[i] = new Ballista(x, y);
     }
     selectedBallista = ballistas.length / 2;
+    ballistas[selectedBallista].selected = true;
     
+    // Spawn cities.
     cities = new City[NO_CITIES];
     int pots = ballistas.length > 1 ? ballistas.length - 1 : 2;
     int citiesPerPot = ceil((float) cities.length / pots);
@@ -87,14 +91,15 @@ void setup() {
         }
     }
     
-    asteroids = new LinkedList<Asteroid>();
+    
+    
     
     previous = millis();
     lag = 0.0;
     ms_per_update = 1000.0 / frameRate;
 }
 
-Destructible selectRandomTarget() {
+GameObject selectRandomTarget() {
     int randomTarget = int(random(ballistas.length + cities.length));
     //print("Random target is " + randomTarget + "\n");
     if (randomTarget >= ballistas.length) {
@@ -108,83 +113,67 @@ Destructible selectRandomTarget() {
     }
 }
 
-// update bombs,render.
 void draw() {
     double current = millis();
     double elapsed = current - previous;
     previous = current;
     lag += elapsed;
-    
-    //Update once per frame.
     while(lag >= ms_per_update) {
         update();
         lag -= ms_per_update;
     }
-    // update();
     render();
 }
 
 void update() {
     forceRegistry.updateForces();
+    
     Iterator<Bomb> bombIterator = bombs.iterator();
     while(bombIterator.hasNext()) {
-        Bomb bomb = bombIterator.next();
-        
-        if (bomb.destroyed) {
+        if (bombIterator.next().destroyed()) {
             bombIterator.remove(); 
-        }
-        else{
-            bomb.update();
         }
     }
     
-    for (int i = 0; i < ballistas.length; i++) {
-        ballistas[i].update();
+    Iterator<Asteroid> asteroidIterator = asteroids.iterator();
+    while(asteroidIterator.hasNext()) {
+        if (asteroidIterator.next().destroyed()) {
+            asteroidIterator.remove(); 
+        }
     }
     
     // Keep spawning asteroids to fill the maximum (placeholder code to test targeting).
     for (int i = asteroids.size(); i < NO_BALLISTAS + NO_CITIES; i++) {
-        Destructible target = selectRandomTarget();
+        GameObject target = selectRandomTarget();
         asteroids.add(new Asteroid((int)random(0, width), 0,(int)target.position.x,(int)target.position.y, random(0.5f, 10f)));
     }
     
-    Iterator<Asteroid> asteroidIterator = asteroids.iterator();
-    while(asteroidIterator.hasNext()) {
-        Asteroid asteroid = asteroidIterator.next();
-        
-        if (asteroid.destroyed) {
-            asteroidIterator.remove(); 
+    // Update all GameObjects.
+    Iterator<GameObject> iterator = gameObjects.iterator();
+    while(iterator.hasNext()) {
+        GameObject gameObject = iterator.next();
+        gameObject.update();
+        if (gameObject.destroyed()) {
+            iterator.remove();
         }
-        else{
-            asteroid.update();
-        }
-    }    
+    }
 }
 
 
 void render() {
-    //Background
+    // Background
     background(0);
     
-    //Backdrop
+    // Backdrop - Fill the background and draw a line for the ground.
     stroke(backgroundColour);
     fill(backgroundColour);
     rect(0, groundHeight, width, height);
     
-    //Foreground
-    Iterator<Bomb> bombIterator = bombs.iterator();
-    while(bombIterator.hasNext()) {
-        bombIterator.next().render(); 
-    }
-    for (int i = 0; i < ballistas.length; i++) {
-        ballistas[i].render(i == selectedBallista);
-    }
-    for (int i = 0; i < cities.length; i++) {
-        cities[i].render(); 
-    }
-    Iterator<Asteroid> asteroidIterator = asteroids.iterator();
-    while(asteroidIterator.hasNext()) {
-        asteroidIterator.next().render(); 
+    // Foreground
+    // Render all GameObjects.
+    Iterator<GameObject> iterator = gameObjects.iterator();
+    while(iterator.hasNext()) {
+        iterator.next().render();
     }
 }
 
@@ -204,9 +193,8 @@ void keyPressed() {
             ballistas[selectedBallista].destroy();
             break;
         case ' ':
-            //bombs.peek().destroy();
             if (!bombs.isEmpty()) {
-                bombs.peek().destroy();
+                bombs.peek().explode();
             }
             break;
     }
@@ -216,6 +204,8 @@ void switchBallista(boolean ascending) {
     int change = ascending ? 1 : - 1; // Increment / decrement.  
     //Keep switching ballistas until finding one that is not disabled.
     for (int attempt = 0; attempt < ballistas.length; attempt++) {
+        ballistas[selectedBallista].selected = false;
+        
         // Increment or decrement the index.
         selectedBallista += change;
         
@@ -227,8 +217,10 @@ void switchBallista(boolean ascending) {
             selectedBallista = 0; 
         }
         
+        ballistas[selectedBallista].selected = true;
+        
         // Break out of the loop if the selected ballista is not disabled.
-        if (!ballistas[selectedBallista].destroyed) {
+        if (!ballistas[selectedBallista].destroyed()) {
             break;
         }   
     }

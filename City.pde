@@ -1,11 +1,13 @@
-public class City extends Destructible{
+public class City extends Target {
     public City(int x, int y) {
         super(x, y);
     }
     
+    void update() {
+    }
+    
     void render() {
-        if (!destroyed) {
-            // Draw a circle to highlight the selected ballista.
+        if (!disabled) {
             fill(playerColour);
         }
         else{
