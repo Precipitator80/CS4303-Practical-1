@@ -1,16 +1,16 @@
 public class City extends Destructible{
-  public City(int x, int y) {
-      super(x,y);
-  }
-  
-  void render(){
-    if(!destroyed){
-        // Draw a circle to highlight the selected ballista.
-        fill(playerColour);
+    public City(int x, int y) {
+        super(x,y);
     }
-    else{
-        fill(backgroundColour);
+    
+    void render() {
+        if (!destroyed) {
+            // Draw a circle to highlight the selected ballista.
+            fill(playerColour);
+        }
+        else{
+            fill(backgroundColour);
+        }
+        circle(position.x, position.y, 15);
     }
-    circle(position.x, position.y, 15);
-  }
 }

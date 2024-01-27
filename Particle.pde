@@ -23,8 +23,8 @@ abstract class Particle extends Destructible {
         invMass = invM;    
         this.col = col;
         
-        forceRegistry.add(this, gravity) ;
-        forceRegistry.add(this, drag) ;
+        forceRegistry.add(this, gravity);
+        forceRegistry.add(this, drag);
     }
     
     // Add a force to the accumulator.
@@ -50,7 +50,7 @@ abstract class Particle extends Destructible {
         // Clear the force accumulator.
         forceAccumulator.x = 0;
         forceAccumulator.y = 0;
-         
+        
         // Destroy the particle if it goes out of bounds horizontally.
         if (position.x < 0) {
             destroy();
@@ -61,17 +61,17 @@ abstract class Particle extends Destructible {
     }
     
     void update() {
-        if(!destroyed){
-          integrate();
+        if (!destroyed) {
+            integrate();
         }
     }
     
     // For now just render all particles the same. Should be made abstract later.
     void render() {
-      if(!destroyed){
-        stroke(col);
-        fill(col);
-        ellipse(position.x, position.y, 5, 5);
-      }
+        if (!destroyed) {
+            stroke(col);
+            fill(col);
+            ellipse(position.x, position.y, 5, 5);
+        }
     }
 }

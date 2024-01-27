@@ -6,21 +6,21 @@ abstract class Explosive extends Particle {
     }
     
     void update() {
-       super.update();
-        if(!destroyed){
-          if (position.y > groundHeight) {
-            explode();
-          }
+        super.update();
+        if (!destroyed) {
+            if (position.y > groundHeight) {
+                explode();
+            }
         }
     }
     
     // Explode the particle.
     void explode() {
-      // Take into account whether this particle is friendly or not.
-      
-      
-      // Destroy after explosion is finished.
-      destroy();
+        //Take into account whether this particle is friendly or not.
+        
+        
+        //Destroy after explosion is finished.
+        destroy();
     }
-  
+    
 }
