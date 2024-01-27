@@ -3,7 +3,7 @@ public abstract class Destructible{
     public boolean destroyed = false;
     
     public Destructible(int x, int y) {
-        this.position = new PVector(x,y);  
+        this.position = new PVector(x,y);
     }
     
     void destroy() {

@@ -6,7 +6,7 @@ abstract class Particle extends Destructible {
     public PVector velocity;
     
     //Vector to accumulate forces prior to integration
-    private PVector forceAccumulator; 
+    private PVector forceAccumulator = new PVector(0, 0); 
     
     //Store inverse mass to allow simulation of infinite mass
     public float invMass;
@@ -16,15 +16,14 @@ abstract class Particle extends Destructible {
     
     color col;
     
-    Particle(int x, int y, float xVel, float yVel, float invM, color col) {
-        super(x,y);
-        velocity = new PVector(xVel, yVel);
-        forceAccumulator = new PVector(0, 0);
+    Particle(int x, int y, PVector velocity, float invM, color col) {
+        super(x, y);
+        this.velocity = velocity;
         invMass = invM;    
         this.col = col;
         
         forceRegistry.add(this, gravity);
-        forceRegistry.add(this, drag);
+        //forceRegistry.add(this, drag);
     }
     
     // Add a force to the accumulator.

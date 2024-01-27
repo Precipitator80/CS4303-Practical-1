@@ -30,6 +30,7 @@ color enemyColour = GREEN;
 
 //// Late initialisation.
 LinkedList<Bomb> bombs;
+LinkedList<Asteroid> asteroids;
 Ballista[] ballistas;
 City[] cities;
 int selectedBallista;
@@ -77,13 +78,34 @@ void setup() {
         }
     }
     else{
-        
+        int potWidth = (int)(width / 2);
+        for (int potIndex = 0; potIndex < pots; potIndex++) {
+            for (int subIndex = 0; subIndex < citiesPerPot && cityIndex < cities.length; subIndex++) {
+                int x = (int) ballistas[0].position.x + ((subIndex + 1) * potWidth / (citiesPerPot + 1)) * (potIndex % 2 == 0 ? - 1 : 1);
+                cities[cityIndex++] = new City(x, groundHeight);
+            }
+        }
     }
     
+    asteroids = new LinkedList<Asteroid>();
     
     previous = millis();
     lag = 0.0;
     ms_per_update = 1000.0 / frameRate;
+}
+
+Destructible selectRandomTarget() {
+    int randomTarget = int(random(ballistas.length + cities.length));
+    //print("Random target is " + randomTarget + "\n");
+    if (randomTarget >= ballistas.length) {
+        randomTarget -= ballistas.length;
+        //print("Returning city: " + randomTarget + "\n");
+        return cities[randomTarget];
+    }
+    else{
+        //print("Returning ballista: " + randomTarget + "\n");
+        return ballistas[randomTarget];
+    }
 }
 
 // update bombs,render.
@@ -104,12 +126,12 @@ void draw() {
 
 void update() {
     forceRegistry.updateForces();
-    Iterator<Bomb> iterator = bombs.iterator();
-    while(iterator.hasNext()) {
-        Bomb bomb = iterator.next();
+    Iterator<Bomb> bombIterator = bombs.iterator();
+    while(bombIterator.hasNext()) {
+        Bomb bomb = bombIterator.next();
         
         if (bomb.destroyed) {
-            iterator.remove(); 
+            bombIterator.remove(); 
         }
         else{
             bomb.update();
@@ -120,6 +142,23 @@ void update() {
         ballistas[i].update();
     }
     
+    // Keep spawning asteroids to fill the maximum (placeholder code to test targeting).
+    for (int i = asteroids.size(); i < NO_BALLISTAS + NO_CITIES; i++) {
+        Destructible target = selectRandomTarget();
+        asteroids.add(new Asteroid((int)random(0, width), 0,(int)target.position.x,(int)target.position.y, random(0.5f, 10f)));
+    }
+    
+    Iterator<Asteroid> asteroidIterator = asteroids.iterator();
+    while(asteroidIterator.hasNext()) {
+        Asteroid asteroid = asteroidIterator.next();
+        
+        if (asteroid.destroyed) {
+            asteroidIterator.remove(); 
+        }
+        else{
+            asteroid.update();
+        }
+    }    
 }
 
 
@@ -133,15 +172,19 @@ void render() {
     rect(0, groundHeight, width, height);
     
     //Foreground
-    Iterator<Bomb> iterator = bombs.iterator();
-    while(iterator.hasNext()) {
-        iterator.next().render(); 
+    Iterator<Bomb> bombIterator = bombs.iterator();
+    while(bombIterator.hasNext()) {
+        bombIterator.next().render(); 
     }
     for (int i = 0; i < ballistas.length; i++) {
         ballistas[i].render(i == selectedBallista);
     }
     for (int i = 0; i < cities.length; i++) {
         cities[i].render(); 
+    }
+    Iterator<Asteroid> asteroidIterator = asteroids.iterator();
+    while(asteroidIterator.hasNext()) {
+        asteroidIterator.next().render(); 
     }
 }
 

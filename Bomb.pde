@@ -1,5 +1,5 @@
 class Bomb extends Explosive {
-    public Bomb(int x, int y, float xVel, float yVel) {
-        super(x, y, xVel, yVel, 1f, playerColour, true); 
+    public Bomb(int x, int y, int targetX, int targetY) {
+        super(x, y, targetX, targetY, 1f, playerColour, true); 
     }
 }

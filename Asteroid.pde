@@ -1,5 +1,5 @@
 class Asteroid extends Explosive {
-    public Asteroid(int x, int y, float xVel, float yVel, float invM) {
-        super(x, y, xVel, yVel, invM, enemyColour, false); 
+    public Asteroid(int x, int y, int targetX, int targetY, float invM) {
+        super(x, y, targetX, targetY, invM, enemyColour, false); 
     }
 }

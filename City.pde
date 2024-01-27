@@ -1,6 +1,6 @@
 public class City extends Destructible{
     public City(int x, int y) {
-        super(x,y);
+        super(x, y);
     }
     
     void render() {

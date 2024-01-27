@@ -1,9 +1,8 @@
 public class Ballista extends Destructible {
-    int ballistaForce = 17;
     int ammoRemaining = 10;
     
     public Ballista(int x, int y) {
-        super(x,y);
+        super(x, y);
     }
     
     void update() {
@@ -11,40 +10,11 @@ public class Ballista extends Destructible {
     
     void fire() {
         if (!destroyed && ammoRemaining > 0) {
-            // Calculate the velocity based on projectile motion.
-            float av = gravity.gravity.y; // Vertical acceleration.
-            float sv = (position.y - mouseY) / (float) height; // Vertical displacement.
-            if (sv > 0) {        
-                // Initial vertical speed.
-                // v^2 =u^2 + 2aS
-                // 0^2 =u^2 + 2aS
-                // u = -sqrt(2aS)
-                float uv= -sqrt(2 * av * sv);
-                
-                // Time until max height.
-                // v = u+at
-                // at = v - u
-                // t = (v- u) / a
-                // t = -u/ a
-                float t = -uv / av; 
-                
-                // Initial horizontal speed.
-                // d = vt
-                // v = d/t       
-                float uh = (mouseX - position.x) / (t * width);
-                
-                // Define the velocity from its components.
-                PVector velocity = new PVector(uh, uv);
-                
-                // Account for drag. Just use a multiplier for now. Not a perfect solution, but simple.
-                velocity.mult(1.125f);
-                
-                // Spawnthe particle.
-                bombs.add(new Bomb((int)position.x,(int)position.y, velocity.x, velocity.y));
-                
-                // Remove ammo.
-                //ammoRemaining--;
-            }
+            // Spawn the particle.
+            bombs.add(new Bomb((int)position.x,(int)position.y, mouseX, mouseY));
+            
+            // Remove ammo.
+            //ammoRemaining--;
         }
     }
     
