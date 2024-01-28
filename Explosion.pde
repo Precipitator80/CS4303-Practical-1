@@ -1,14 +1,24 @@
 class Explosion extends GameObject {
-    double explosionTime;
     double explosionDuration = 1000.0;
     color col = color(249,182,78);
-    public Explosion(int x, int y, boolean friendly) {
+    double explosionTime;
+    float size;
+    public Explosion(int x, int y, boolean friendly, float size) {
         super(x,y);
         explosionTime = millis();
+        this.size = size;
         
         // If not friendly, destroy any destructibles within the radius.
-        if (!friendly && position.y > groundHeight) {
-            
+        
+        if (!friendly) { // && position.y > groundHeight // Possible optimisation for later.
+            Iterator<Target> iterator = targets.iterator();
+            while(iterator.hasNext()) {
+                Target target = iterator.next();
+                float distance = this.position.copy().sub(target.position).mag();
+                if (distance < (this.size / 2f + target.size / 2f)) {
+                    target.disable();
+                }
+            }
         }
     }
     
@@ -21,11 +31,19 @@ class Explosion extends GameObject {
         
         // Check for any chain reactions.
         // If an explosive is within the explosion radius and not marked for destruction.
+        Iterator<Explosive> iterator = explosives.iterator();
+        while(iterator.hasNext()) {
+            Explosive explosive = iterator.next();
+            float distance = this.position.copy().sub(explosive.position).mag();
+            if (distance < (this.size / 2f + explosive.size / 2f)) {
+                explosive.explode();
+            }
+        }
     }
     
     void render() {
         stroke(col);
         fill(col);
-        ellipse(position.x, position.y, 15, 15);
+        circle(position.x, position.y, size);
     }
 }

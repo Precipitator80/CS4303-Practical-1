@@ -1,18 +1,18 @@
 public class City extends Target {
     public City(int x, int y) {
-        super(x, y);
+        super(x, y, 0.075f * width);
     }
     
     void update() {
     }
     
     void render() {
-        if (!disabled) {
+        if (!disabled()) {
             fill(playerColour);
         }
         else{
             fill(backgroundColour);
         }
-        circle(position.x, position.y, 15);
+        circle(position.x, position.y, size);
     }
 }

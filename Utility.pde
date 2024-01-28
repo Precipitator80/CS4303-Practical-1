@@ -44,4 +44,16 @@ static class Utility{
         }
         return velocity;
     }
+    
+    /*
+    public static PVector calculateStartingVelocityWithDrag(int x, int y, int targetX, int targetY, float m, float k1, float g, float t, float width, float height) {
+    float rx = (x - targetX) / (float) width;
+    float ry = (y - targetY) / (float) height;
+    
+    float vx = -(k1 * rx / m);
+    float vy = -(k1 * ry / m + g * t);
+    
+    return new PVector(vx, vy);
+}
+    */
 }
