@@ -90,12 +90,12 @@ void setup() {
         }
     }
     
-    
-    
-    
     previous = millis();
     lag = 0.0;
     ms_per_update = 1000.0 / frameRate;
+    
+    // Create a level manager.
+    new LevelManager();
 }
 
 GameObject selectRandomTarget() {
