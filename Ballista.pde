@@ -1,9 +1,10 @@
 public class Ballista extends Target {
-    int ammoRemaining = 10;
+    int ammoRemaining;
     boolean selected;
     
-    public Ballista(int x, int y) {
+    public Ballista(int x, int y, int ammoRemaining) {
         super(x, y, 0.075f * width);
+        this.ammoRemaining = ammoRemaining;
     }
     
     void update() {
@@ -15,14 +16,20 @@ public class Ballista extends Target {
             new Bomb((int)position.x,(int)position.y, mouseX, mouseY);
             
             // Remove ammo.
-            //ammoRemaining--;
+            if (levelManager.state == LevelState.LEVEL) {
+                ammoRemaining--;
+            }
         }
     }
     
+    // Set ammo to 0 and switch ballista if this was the one selected.
     void disable() {
         if (!disabled()) {
             super.disable();
-            switchBallista(true);
+            ammoRemaining = 0;
+            if (selected) {
+                levelManager.switchBallista(true);
+            }
         }
     }
     
@@ -44,6 +51,21 @@ public class Ballista extends Target {
                 fill(playerColour);
                 circle(position.x, position.y, size / 3);
             }
+            
+            // Show the ammo remaining when in a round and infinity otherwise.
+            String textToShow;
+            switch(levelManager.state) {
+                case POST_LEVEL:
+                    case LEVEL:
+                    textToShow = Integer.toString(ammoRemaining);
+                    break;
+                default:
+                textToShow = "∞";
+            }
+            textAlign(CENTER);
+            fill(255);
+            textSize(width / 25);
+            text(textToShow, position.x, position.y + width / 15);
         }
         else{
             fill(backgroundColour);

@@ -13,7 +13,7 @@ abstract class Explosive extends Particle {
     
     void update() {
         super.update();
-        if (position.y > groundHeight) {
+        if (position.y > levelManager.groundHeight) {
             explode();
         }
     }
@@ -27,6 +27,9 @@ abstract class Explosive extends Particle {
         if (!destroyed()) {
             destroy();
             new Explosion((int)position.x,(int)position.y, friendly, explosionSize);
+        }
+        if (!friendly) {
+            levelManager.score += 25;
         }
     }
 }

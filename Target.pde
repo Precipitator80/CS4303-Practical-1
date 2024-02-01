@@ -7,13 +7,23 @@ public abstract class Target extends GameObject {
         targets.add(this);
     }
     
+    boolean disabled() {
+        return disabled;
+    }
+    
+    // Disable the target and remove it from the targets list.
     void disable() {
         if (!disabled()) {
             disabled = true;
             targets.remove(this);
         }
     }
-    boolean disabled() {
-        return disabled;
+    
+    // Repair the target and add it back to the targets list.
+    void repair() {
+        if (disabled()) {
+            disabled = false;
+            targets.add(this);
+        }
     }
 }
