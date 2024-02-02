@@ -37,10 +37,7 @@ class Explosion extends GameObject {
             Explosive explosive = iterator.next();
             float distance = this.position.copy().sub(explosive.position).mag();
             if (distance < (this.size / 2f + explosive.size / 2f)) {
-                explosive.explode();
-                if (this.friendly && !explosive.friendly) {
-                    levelManager.addPoints(25);
-                }
+                explosive.explode(friendly);
             }
         }
     }

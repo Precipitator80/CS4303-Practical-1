@@ -221,6 +221,12 @@ class LevelManager {
         return targets.peek();
     }
     
+    //// State: GAME_OVER
+    void resetParameters() {
+        wave = 0;
+        score = 0;
+    }
+    
     //// Other Functions
     public void switchBallista(boolean ascending) {
         int change = ascending ? 1 :- 1; // Increment / decrement.  
@@ -292,9 +298,10 @@ class LevelManager {
                 break;
             case ENTER:
                 switch(state) {
+                    case GAME_OVER:
+                    resetParameters();
                     case WELCOME:
                     case POST_LEVEL:
-                    case GAME_OVER:
                     state = LevelState.PRE_LEVEL;
                     break;   
             }
