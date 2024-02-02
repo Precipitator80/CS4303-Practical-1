@@ -28,8 +28,5 @@ abstract class Explosive extends Particle {
             destroy();
             new Explosion((int)position.x,(int)position.y, friendly, explosionSize);
         }
-        if (!friendly) {
-            levelManager.score += 25;
-        }
     }
 }

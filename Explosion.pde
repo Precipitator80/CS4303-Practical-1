@@ -3,13 +3,14 @@ class Explosion extends GameObject {
     color col = color(249,182,78);
     double explosionTime;
     float size;
+    boolean friendly;
     public Explosion(int x, int y, boolean friendly, float size) {
         super(x,y);
         explosionTime = millis();
         this.size = size;
         
         // If not friendly, destroy any destructibles within the radius.
-        
+        this.friendly = friendly;
         if (!friendly) { // && position.y > groundHeight // Possible optimisation for later.
             Iterator<Target> iterator = targets.iterator();
             while(iterator.hasNext()) {
@@ -37,6 +38,9 @@ class Explosion extends GameObject {
             float distance = this.position.copy().sub(explosive.position).mag();
             if (distance < (this.size / 2f + explosive.size / 2f)) {
                 explosive.explode();
+                if (this.friendly && !explosive.friendly) {
+                    levelManager.addPoints(25);
+                }
             }
         }
     }

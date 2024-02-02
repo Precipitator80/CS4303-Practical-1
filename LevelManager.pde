@@ -205,12 +205,12 @@ class LevelManager {
     void finishWave() {
         for (Ballista ballista : ballistas) {
             if (!ballista.disabled()) {
-                score += ballista.ammoRemaining * 5;
+                addPoints(ballista.ammoRemaining * 5);
             }
         }
         for (City city : cities) {
             if (!city.disabled()) {
-                score += 100;
+                addPoints(100);
             }
         }
         state = LevelState.POST_LEVEL;
@@ -246,6 +246,11 @@ class LevelManager {
                 break;
             }   
         }
+    }
+    
+    public void addPoints(int points) {
+        int multiplier = constrain((wave + 1) / 2, 1, 6);
+        score += points * multiplier;
     }
     
     //// Input / Output Functions    
