@@ -248,7 +248,7 @@ class LevelManager {
             ballistas[selectedBallista].selected = true;
             
             // Break out of the loop if the selected ballista is not disabled.
-            if (!ballistas[selectedBallista].disabled()) {
+            if (!ballistas[selectedBallista].disabled() && ballistas[selectedBallista].ammoRemaining > 0) {
                 break;
             }   
         }

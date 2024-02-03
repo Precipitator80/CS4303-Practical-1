@@ -18,6 +18,10 @@ public class Ballista extends Target {
             // Remove ammo.
             if (levelManager.state == LevelState.LEVEL) {
                 ammoRemaining--;
+                
+                if (ammoRemaining <= 0) {
+                    levelManager.switchBallista(true);
+                }
             }
         }
     }
