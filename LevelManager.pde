@@ -62,6 +62,7 @@ class LevelManager {
         // Backdrop - Fill the background and draw a line for the ground.
         stroke(backgroundColour);
         fill(backgroundColour);
+        rectMode(CORNER);
         rect(0, groundHeight, width, height);
         
         // Foreground
@@ -131,6 +132,8 @@ class LevelManager {
                 }
             }
         }
+        
+        new OptionsButton((int)(0.8f * width),(int)(0.1f * height));
         
         initialSetup = true;
     }
@@ -248,7 +251,7 @@ class LevelManager {
             ballistas[selectedBallista].selected = true;
             
             // Break out of the loop if the selected ballista is not disabled.
-            if (!ballistas[selectedBallista].disabled() && ballistas[selectedBallista].ammoRemaining > 0) {
+            if (!ballistas[selectedBallista].disabled()) {
                 break;
             }   
         }
@@ -261,7 +264,19 @@ class LevelManager {
     
     //// Input / Output Functions    
     void mouseReleased() {
-        ballistas[selectedBallista].fire();
+        boolean pressedButton = false;
+        Iterator<Button> iterator = buttons.iterator();
+        while(iterator.hasNext()) {
+            Button button = iterator.next();
+            if (button.mouseOver) {
+                button.onClick();
+                pressedButton = true;
+            }
+        }
+        
+        if (!pressedButton) {
+            ballistas[selectedBallista].fire();
+        }
     }
     
     void keyPressed() {

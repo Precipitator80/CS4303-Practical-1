@@ -32,6 +32,7 @@ public final LinkedTransferQueue<Bomb> bombs = new LinkedTransferQueue<Bomb>();
 public final LinkedTransferQueue<Explosive> explosives = new LinkedTransferQueue<Explosive>();
 public final LinkedTransferQueue<GameObject> gameObjects = new LinkedTransferQueue<GameObject>();
 public final LinkedTransferQueue<Target> targets = new LinkedTransferQueue<Target>();
+public final LinkedTransferQueue<Button> buttons = new LinkedTransferQueue<Button>();
 
 //// Late initialisation.
 LevelManager levelManager;
@@ -43,10 +44,14 @@ double ms_per_update;
 
 void setup() {
     // Set the screen size.
-    //size(200, 200) ;
-    size(500, 500);
-    //size(1700,1000);
-    //size(1280, 720);
+    // 1:1
+    //size(200, 200);
+    //size(500, 500);
+    //size(1000,1000);
+    
+    // 16:9
+    //size(720, 405);
+    size(1280, 720);
     
     // Initialise the update timer.    
     previous = millis();
