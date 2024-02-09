@@ -4,7 +4,6 @@ class Missile extends Asteroid {
     }
     
     void render() {
-        float angle = atan2(mouseY - position.y, mouseX - position.x);
         pushMatrix();
         translate(position.x, position.y);
         rotate(atan2(velocity.y, velocity.x));

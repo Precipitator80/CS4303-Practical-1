@@ -67,14 +67,29 @@ public class Ballista extends Target {
                 default:
                 textToShow = "∞";
             }
+            
+            // To show selected, draw a circle around the turret with transparent shape but player colour  outline.
+            
             textAlign(CENTER);
             fill(255);
             textSize(height / 25);
             text(textToShow, position.x, position.y + height / 15);
+            
+            // Show the base and launcher.
+            image(ballistaBase, position.x, position.y, size, size);
+            pushMatrix();
+            translate(position.x, position.y);
+            rotate(atan2(mouseY - position.y, mouseX - position.x));
+            imageMode(CENTER);
+            image(ballista, 0, 0, size, 0.44f * size);
+            popMatrix();
+            
         }
         else{
-            fill(backgroundColour);
-            circle(position.x, position.y, size);
+            // Show only the base with a grey tint.
+            tint(64);
+            image(ballistaBase, position.x, position.y, size, size);
+            tint(255);
         }
     }
 }

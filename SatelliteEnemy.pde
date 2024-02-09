@@ -4,9 +4,7 @@ class SatelliteEnemy extends FlyingEnemy{
     }
     
     void render() {
-        stroke(enemyColour);
-        fill(enemyColour);
-        circle(position.x, position.y, size);
+        image(satellite, position.x, position.y, 2f * size, size);
     }
     
     void fire() {

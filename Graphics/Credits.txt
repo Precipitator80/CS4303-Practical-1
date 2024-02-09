@@ -2,3 +2,4 @@ City - software_atelier - https://opengameart.org/content/city-pixel-tileset - A
 Bomber - qubodup - https://opengameart.org/content/space-jet-side-sprite - 09.02.2024
 Asteroids - surt - https://opengameart.org/content/shmup-ships - 09.02.2024
 Missile - MSavioti - https://opengameart.org/content/missile-32x32 - Accessed 09.02.2024
+UFO - Kenney - https://opengameart.org/content/space-shooter-extension-250 - Accessed 09.02.2024

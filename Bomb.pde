@@ -22,8 +22,11 @@ class Bomb extends Particle {
     }
     
     void render() {
-        stroke(playerColour);
-        fill(playerColour);
-        circle(position.x, position.y, size);
+        pushMatrix();
+        translate(position.x, position.y);
+        rotate(atan2(velocity.y, velocity.x));
+        imageMode(CENTER);
+        image(missile, 0, 0, size, size);
+        popMatrix();
     }
 }

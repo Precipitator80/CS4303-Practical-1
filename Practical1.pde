@@ -61,6 +61,9 @@ PImage cluster1;
 PImage asteroid;
 PImage bomber;
 PImage missile;
+PImage satellite;
+PImage ballista;
+PImage ballistaBase;
 
 void setup() {
     // Set the screen size.
@@ -96,6 +99,9 @@ void setup() {
     asteroid = loadImage(graphicsFolder + "Asteroid.png");
     bomber = loadImage(graphicsFolder + "Bomber.png");
     missile = loadImage(graphicsFolder + "Missile.png");
+    satellite = loadImage(graphicsFolder + "Satellite.png");
+    ballista = loadImage(graphicsFolder + "Ballista.png");
+    ballistaBase = loadImage(graphicsFolder + "BallistaBase.png");
     
     // Set the ground height.
     groundHeight = (int)(0.95f * height);
