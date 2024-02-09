@@ -17,7 +17,7 @@ abstract class FlyingEnemy extends GameObject {
         this.maxFireTime = maxFireTime;
         
         // Add an explosive component.
-        new Explosive(this, false, size, size * 3f, false);
+        new Explosive(this, false, size, size * 3f, false, Audio.bigExplosion);
         resetTime();
     }
     

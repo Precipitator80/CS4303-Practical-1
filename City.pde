@@ -10,11 +10,11 @@ public class City extends Target {
         imageMode(CENTER);
         if (!disabled()) {
             fill(playerColour);
-            image(city, position.x, position.y, 1.61f * size, size);
+            image(Graphics.city, position.x, position.y, 1.61f * size, size);
         }
         else{
             fill(backgroundColour);
-            image(cityBroken, position.x, position.y, 1.61f * size, size);
+            image(Graphics.cityBroken, position.x, position.y, 1.61f * size, size);
         }
         //circle(position.x, position.y, size);
     }

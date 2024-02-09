@@ -15,16 +15,16 @@ class ClusterAsteroid extends Asteroid {
         splitTime = random(levelManager.minSplitTime, levelManager.maxSplitTime);
         switch(clusterSize) {
             case 4:
-                image = cluster4;
+                image = Graphics.cluster4;
                 break;
             case 2:
-                image = cluster2;
+                image = Graphics.cluster2;
                 break;
             case 1:
-                image = cluster1;
+                image = Graphics.cluster1;
                 break;
             default:
-            image = cluster3;
+            image = Graphics.cluster3;
         }
     }
     

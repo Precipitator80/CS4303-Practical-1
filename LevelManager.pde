@@ -88,7 +88,7 @@ class LevelManager {
     
     void render() {
         // Background
-        background(background);
+        background(Graphics.background);
         
         // Foreground
         // Render all GameObjects.

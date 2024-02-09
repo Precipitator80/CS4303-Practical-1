@@ -4,7 +4,8 @@ class Explosive extends GameObject {
     float size;
     float explosionSize;
     boolean checkCollisions;
-    Explosive(GameObject parent, boolean friendly, float size, float explosionSize, boolean checkCollisions) {
+    SoundFile explosionSound;
+    Explosive(GameObject parent, boolean friendly, float size, float explosionSize, boolean checkCollisions, SoundFile explosionSound) {
         super((int)parent.position.x,(int)parent.position.y);
         this.parent = parent;
         this.position = parent.position;
@@ -12,6 +13,7 @@ class Explosive extends GameObject {
         this.size = size;
         this.explosionSize = explosionSize;
         this.checkCollisions = checkCollisions;
+        this.explosionSound = explosionSound;
         explosives.add(this);
     }
     
@@ -57,7 +59,7 @@ class Explosive extends GameObject {
     void explode(boolean triggerWasFriendly) {
         if (!destroyed()) {
             destroy();
-            new Explosion((int)position.x,(int)position.y, triggerWasFriendly, explosionSize);
+            new Explosion((int)position.x,(int)position.y, triggerWasFriendly, explosionSize, explosionSound);
             if (triggerWasFriendly && !this.friendly) {
                 levelManager.addPoints(25);
             }

@@ -1,3 +1,7 @@
+Audio:
+ADD THE AUDIO CREDITS!!
+
+Graphics:
 City - software_atelier - https://opengameart.org/content/city-pixel-tileset - Accessed 08.02.2024
 Bomber - qubodup - https://opengameart.org/content/space-jet-side-sprite - 09.02.2024
 Asteroids - surt - https://opengameart.org/content/shmup-ships - 09.02.2024

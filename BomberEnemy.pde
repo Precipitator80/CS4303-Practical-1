@@ -8,7 +8,7 @@ class BomberEnemy extends FlyingEnemy{
         translate(position.x, position.y);
         imageMode(CENTER);
         scale(directionMultiplier, 1);
-        image(bomber, 0, 0,  2f * size, size);
+        image(Graphics.bomber, 0, 0,  2f * size, size);
         popMatrix();
     }
     

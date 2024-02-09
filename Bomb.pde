@@ -9,8 +9,10 @@ class Bomb extends Particle {
         super(x, y, velocity, invMass, size);
         bombs.add(this);
         
+        Audio.fire.play(1, Audio.audioPan(position.x), 0.25f);
+        
         // Add an explosive component.
-        explosive = new Explosive(this, true, size, size * 3f, true);
+        explosive = new Explosive(this, true, size, size * 3f, true, Audio.explosion);
     }
     
     void destroy() {
@@ -26,7 +28,7 @@ class Bomb extends Particle {
         translate(position.x, position.y);
         rotate(atan2(velocity.y, velocity.x));
         imageMode(CENTER);
-        image(missile, 0, 0, size, size);
+        image(Graphics.missile, 0, 0, size, size);
         popMatrix();
     }
 }

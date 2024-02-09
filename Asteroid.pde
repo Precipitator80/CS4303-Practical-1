@@ -7,8 +7,8 @@ class Asteroid extends Particle {
         asteroids.add(this);
         
         // Add an explosive component.
-        explosive = new Explosive(this, false, size, size * 2f, false);
-        image = asteroid;
+        explosive = new Explosive(this, false, size, size * 2f, false, Audio.explosion);
+        image = Graphics.asteroid;
     }
     
     void destroy() {

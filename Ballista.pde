@@ -76,19 +76,19 @@ public class Ballista extends Target {
             text(textToShow, position.x, position.y + height / 15);
             
             // Show the base and launcher.
-            image(ballistaBase, position.x, position.y, size, size);
+            image(Graphics.ballistaBase, position.x, position.y, size, size);
             pushMatrix();
             translate(position.x, position.y);
             rotate(atan2(mouseY - position.y, mouseX - position.x));
             imageMode(CENTER);
-            image(ballista, 0, 0, size, 0.44f * size);
+            image(Graphics.ballista, 0, 0, size, 0.44f * size);
             popMatrix();
             
         }
         else{
             // Show only the base with a grey tint.
             tint(64);
-            image(ballistaBase, position.x, position.y, size, size);
+            image(Graphics.ballistaBase, position.x, position.y, size, size);
             tint(255);
         }
     }

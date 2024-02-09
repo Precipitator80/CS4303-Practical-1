@@ -4,7 +4,7 @@ class Explosion extends GameObject {
     double explosionTime;
     float size;
     boolean friendly;
-    public Explosion(int x, int y, boolean friendly, float size) {
+    public Explosion(int x, int y, boolean friendly, float size, SoundFile explosionSound) {
         super(x,y);
         explosionTime = millis();
         this.size = size;
@@ -21,6 +21,9 @@ class Explosion extends GameObject {
                 }
             }
         }
+        
+        // Play explosions with half pan and reduced volume.
+        explosionSound.play(1, Audio.audioPan(position.x), 0.1f);
         
         explosions.add(this);
     }

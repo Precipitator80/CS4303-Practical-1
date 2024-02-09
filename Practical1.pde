@@ -1,7 +1,7 @@
 // IDEAS FOR VARIATION:
 // HAVE UPGRADE SYSTEM BETWEEN WAVES - Put it as a button in the corner rather than forcing it open.
 // START SETTINGS
-
+import processing.sound.*;
 import java.util.LinkedList;
 import java.util.concurrent.LinkedTransferQueue;
 
@@ -42,6 +42,9 @@ public final LinkedTransferQueue<Button> buttons = new LinkedTransferQueue<Butto
 
 //// Late initialisation.
 LevelManager levelManager;
+Audio Audio;
+Graphics Graphics;
+
 int groundHeight;
 
 // Update manager
@@ -49,21 +52,8 @@ double previous;
 double lag;
 double ms_per_update;
 
-String graphicsFolder = "Graphics/";
 float aspectRatio;
-PImage background;
-PImage city;
-PImage cityBroken;
-PImage cluster4;
-PImage cluster3;
-PImage cluster2;
-PImage cluster1;
-PImage asteroid;
-PImage bomber;
-PImage missile;
-PImage satellite;
-PImage ballista;
-PImage ballistaBase;
+
 
 void setup() {
     // Set the screen size.
@@ -84,24 +74,8 @@ void setup() {
     
     // Create a level manager.
     levelManager = new LevelManager();
-    
-    // bg = loadImage("CityTest.jpg");
-    // bg.resize(width, height);
-    
-    background = loadImage(graphicsFolder + "Background.png");
-    background.resize(width, height);
-    city = loadImage(graphicsFolder + "City.png");
-    cityBroken = loadImage(graphicsFolder + "CityBroken.png");
-    cluster4 = loadImage(graphicsFolder + "Cluster4.png");
-    cluster3 = loadImage(graphicsFolder + "Cluster3.png");
-    cluster2 = loadImage(graphicsFolder + "Cluster2.png");
-    cluster1 = loadImage(graphicsFolder + "Cluster1.png");
-    asteroid = loadImage(graphicsFolder + "Asteroid.png");
-    bomber = loadImage(graphicsFolder + "Bomber.png");
-    missile = loadImage(graphicsFolder + "Missile.png");
-    satellite = loadImage(graphicsFolder + "Satellite.png");
-    ballista = loadImage(graphicsFolder + "Ballista.png");
-    ballistaBase = loadImage(graphicsFolder + "BallistaBase.png");
+    Audio = new Audio(this);
+    Graphics = new Graphics();
     
     // Set the ground height.
     groundHeight = (int)(0.95f * height);
