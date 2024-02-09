@@ -13,7 +13,8 @@ public class Ballista extends Target {
     void fire() {
         if (ammoRemaining > 0) {
             // Spawn the particle.
-            new Bomb((int)position.x,(int)position.y, mouseX, mouseY);
+            PVector velocity = Utility.calculateStartingVelocity((int)position.x, (int)position.y, mouseX, mouseY);
+            new Bomb((int)position.x,(int)position.y, velocity);
             
             // Remove ammo.
             if (levelManager.state == LevelState.LEVEL) {

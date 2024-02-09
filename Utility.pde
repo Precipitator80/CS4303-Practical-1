@@ -49,6 +49,15 @@ class Utility{
         return constrain(previousX + (int) random( -maxOffset * width, maxOffset * width), 0, width);
     }
     
+    public void destroyIfOutOfBounds(GameObject gameObject) {
+        if (gameObject.position.x < 0) {
+            gameObject.destroy();
+        }   
+        if (gameObject.position.x > width) {
+            gameObject.destroy();
+        }
+    }
+    
     /*
     public static PVector calculateStartingVelocityWithDrag(int x, int y, int targetX, int targetY, float m, float k1, float g, float t, float width, float height) {
     float rx = (x - targetX) / (float) width;

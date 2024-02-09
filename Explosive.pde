@@ -1,27 +1,53 @@
-abstract class Explosive extends GameObject {
+class Explosive extends GameObject {
+    GameObject parent;
     boolean friendly;
     float size;
     float explosionSize;
-    GameObject parent;
-    Explosive(int x, int y, int targetX, int targetY, float invM, boolean friendly, float size, float explosionSize) {
-        super(x, y, Utility.calculateStartingVelocity(x, y, targetX, targetY), invM);
-        //super(x, y, Utility.calculateStartingVelocityWithDrag(x, y, targetX, targetY, 1 / invM, drag.k1, gravity.gravity.y, 1f, width, height), invM);
+    boolean checkCollisions;
+    Explosive(GameObject parent, boolean friendly, float size, float explosionSize, boolean checkCollisions) {
+        super((int)parent.position.x,(int)parent.position.y);
+        this.parent = parent;
+        this.position = parent.position;
         this.friendly = friendly;
         this.size = size;
         this.explosionSize = explosionSize;
+        this.checkCollisions = checkCollisions;
         explosives.add(this);
     }
     
     void update() {
-        super.update();
         if (position.y >= levelManager.groundHeight) {
             explode();
         }
+        
+        if (checkCollisions) {
+            // Check for any collisions with other explosives.
+            // If an explosive is within the explosion radius and not marked for destruction.
+            Iterator<Explosive> iterator = explosives.iterator();
+            while(iterator.hasNext()) {
+                Explosive explosive = iterator.next();
+                if (explosive != this) {
+                    float distance = this.position.copy().sub(explosive.position).mag();
+                    if (distance < (this.size / 2f + explosive.size / 2f)) {
+                        boolean triggerWasFriendly = this.friendly || explosive.friendly;
+                        this.explode(triggerWasFriendly);
+                        explosive.explode(triggerWasFriendly);
+                    }
+                }
+            }
+        }
+    }
+    
+    void render() {
+        
     }
     
     void destroy() {
-        super.destroy();
-        explosives.remove(this);
+        if (!destroyed()) {
+            super.destroy();
+            explosives.remove(this);
+            parent.destroy();
+        }
     }
     
     void explode() {

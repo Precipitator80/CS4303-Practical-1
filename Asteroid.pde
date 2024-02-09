@@ -1,14 +1,20 @@
 class Asteroid extends Particle {
-    float size;
-    public Asteroid(int x, int y, int targetX, int targetY, float size) {
-        super(x, y, targetX, targetY, 10f * (size / width), false, size, size * 3f);
-        this.size = size;
+    Explosive explosive;
+    
+    public Asteroid(int x, int y, PVector velocity, float invMass, float size) {
+        super(x, y, velocity, invMass, size);
         asteroids.add(this);
+        
+        // Add an explosive component.
+        explosive = new Explosive(this, false, size, size * 3f, false);
     }
     
     void destroy() {
-        super.destroy();
-        asteroids.remove(this);
+        if (!destroyed()) {
+            super.destroy();
+            asteroids.remove(this);
+            explosive.destroy();
+        }
     }
     
     void render() {

@@ -1,15 +1,11 @@
 class ClusterAsteroid extends Asteroid {
-    int targetX;
-    int targetY;
     int maxFragments;
     
     double spawnTime;
     double splitTime;
     
-    public ClusterAsteroid(int x, int y, int targetX, int targetY, float size, int maxFragments) {
-        super(x,y,targetX,targetY,size);
-        this.targetX = targetX;
-        this.targetY = targetY;
+    public ClusterAsteroid(int x, int y, PVector velocity, float invMass, float size, int maxFragments) {
+        super(x, y, velocity, invMass, size);
         this.maxFragments = maxFragments;
         resetTime();
     }
@@ -32,11 +28,12 @@ class ClusterAsteroid extends Asteroid {
     void spawnCluster() {
         int asteroidsToSpawn = (int)random(1,maxFragments);
         size /= (asteroidsToSpawn + 1);
-        explosionSize /= (asteroidsToSpawn + 1);
-        invMass = 10f * (size / width);
+        explosive.explosionSize /= (asteroidsToSpawn + 1);
+        invMass *= (asteroidsToSpawn + 1);
         maxFragments--;
         for (int i = 0; i < asteroidsToSpawn; i++) {
-            new ClusterAsteroid((int)position.x,(int)position.y,Utility.randomXOffsetWithinBounds((int) position.x, 0.1f), targetY, size, maxFragments);
+            float randomVelocityChange = random(0.0005f, 0.002f) * ((int)random(2) == 0 ? 1 : - 1);
+            new ClusterAsteroid((int)position.x,(int)position.y, velocity.copy().add(new PVector(randomVelocityChange, 0f)), invMass, size, maxFragments);
         }
         resetTime();
     }

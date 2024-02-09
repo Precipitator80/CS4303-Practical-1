@@ -1,20 +1,17 @@
 abstract class FlyingEnemy extends GameObject {
-    int directionMultiplier;
-    float targetSpeed;
-    int targetHeight;
+    float size;
+    PVector velocity;
     public FlyingEnemy(int y) {
-        super(0, y, 0, 0, 1f, false, 0.025f * width, 0.15f * width);
-        directionMultiplier = (position.x == 0) ? 1 : - 1;
-        targetHeight = y;
-        targetSpeed = 0.0001f;
+        super((int)random(2) * width, y);
+        size = 0.05f * height;
+        int directionMultiplier = (position.x == 0) ? 1 : - 1;
+        velocity = new PVector(0.0015f * width * directionMultiplier, 0f);
+        
+        // Add an explosive component.
+        new Explosive(this, false, size, size * 3f, false);
     }
     
     void update() {
-        super.update();
-        updatePositionManually();
-    }
-    
-    void updatePositionManually() {
-        position = new PVector(position.x + targetSpeed, targetHeight);
+        position.add(velocity);
     }
 }

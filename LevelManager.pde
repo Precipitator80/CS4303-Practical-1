@@ -203,14 +203,13 @@ class LevelManager {
                 int x = (int)random(0, width);
                 int y = 0;
                 Target target = selectRandomTarget();
-                int targetX = Utility.randomXOffsetWithinBounds((int)target.position.x, 0.2f);
-                int targetY = groundHeight;
+                PVector velocity = new PVector(random( -0.001f, 0.001f), random(0.001f, 0.005f));
                 float size = width * random(0.025f, 0.05f);
                 if (random(1) < clusterChance) {    
-                    new ClusterAsteroid(x, y, targetX, targetY, size, maxFragments);
+                    new ClusterAsteroid(x, y, velocity, 10f, 1.5f * size, maxFragments);
                 }
                 else{
-                    new Asteroid(x, y, targetX, targetY, size);
+                    new Asteroid(x, y, velocity, 5f, size);
                 }
                 asteroidsSpawned++;
             }
@@ -340,7 +339,7 @@ class LevelManager {
                             }
                         }
                     }
-                    bomb.explode();
+                    bomb.explosive.explode();
                 }
                 break;
             case ENTER:

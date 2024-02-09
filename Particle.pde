@@ -11,13 +11,17 @@ abstract class Particle extends GameObject {
     //Store inverse mass to allow simulation of infinite mass
     public float invMass;
     
+    // A size for any collisions and rendering.
+    public float size;
+    
     //If you do need the mass, here it is:
     public float getMass() {return 1 / invMass;}
     
-    Particle(int x, int y, PVector velocity, float invM) {
+    Particle(int x, int y, PVector velocity, float invMass, float size) {
         super(x, y);
         this.velocity = velocity;
-        invMass = invM;    
+        this.invMass = invMass;
+        this.size = size;
         
         forceRegistry.add(this, gravity);
         //forceRegistry.add(this, drag);
@@ -52,11 +56,6 @@ abstract class Particle extends GameObject {
         integrate();
         
         // Destroy the particle if it goes out of bounds horizontally.
-        if (position.x < 0) {
-            destroy();
-        }   
-        if (position.x > width) {
-            destroy();
-        }
+        Utility.destroyIfOutOfBounds(this);
     }
 }
