@@ -3,5 +3,9 @@
 * one or more particles.
 */
 abstract class ForceGenerator {
-    abstract void updateForce(Particle p);
+    void updateForce(Particle p) {
+        p.addForce(calculateForce(p));
+    }
+    
+    abstract PVector calculateForce(Particle p);
 }

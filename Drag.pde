@@ -15,7 +15,7 @@ public final class Drag extends ForceGenerator {
     }
     
     //Applies the drag force to the given particle
-    public void updateForce(Particle particle) {
+    PVector calculateForce(Particle particle) {
         PVector force = particle.velocity.copy();
         
         //Calculate the total drag coefficient
@@ -25,6 +25,7 @@ public final class Drag extends ForceGenerator {
         //Calculate the final force and apply it
         force.normalize();
         force.mult( -dragCoeff);
-        particle.addForce(force);
+        
+        return force;
     }
 }

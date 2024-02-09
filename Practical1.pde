@@ -16,7 +16,12 @@ final color BLUE = color(45,60,190);
 final ForceRegistry forceRegistry = new ForceRegistry();
 
 //Create a gravitational force
-final Gravity gravity = new Gravity(new PVector(0f,.0001f));
+//final Gravity gravity = new Gravity(new PVector(0f,.0001f)); // More realistic
+final Gravity gravity = new Gravity(new PVector(0f,.00005f));
+
+
+// Utility class with additional methods.
+final Utility Utility = new Utility();
 
 //Create a drag force
 //NB Increase k1, k2 to see an effect

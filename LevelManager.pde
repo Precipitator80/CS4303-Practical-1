@@ -16,6 +16,12 @@ class LevelManager {
     float asteroidTimer;
     int asteroidsSpawned;
     
+    // Cluster asteroids
+    float clusterChance;
+    float minSplitTime;
+    float maxSplitTime;
+    int maxFragments;
+    
     // Ballistas
     Ballista[] ballistas;
     int numberOfBallistas = 3;
@@ -135,6 +141,8 @@ class LevelManager {
         
         new OptionsButton((int)(0.8f * width),(int)(0.1f * height));
         
+        new SatelliteEnemy((int)(0.2f * height));
+        
         initialSetup = true;
     }
     
@@ -160,6 +168,12 @@ class LevelManager {
         minSpawnDelta = 500;
         maxSpawnDelta = 4000;
         asteroidsSpawned = 0;
+        //clusterChance = (wave / 2 - 1) * 0.05f;
+        clusterChance = 1f;
+        //minSplitTime = constrain(15000f / wave, 1000f, 4000f);
+        minSplitTime = constrain(1500f / wave, 100f, 400f);
+        maxSplitTime = minSplitTime + 2000f;
+        maxFragments = constrain((int)(wave * 0.2f), 1, 5);
         
         spawnAsteroids(3);       
         
@@ -186,8 +200,18 @@ class LevelManager {
     void spawnAsteroids(int asteroidsToSpawn) {
         if (targets.size() > 0) {
             for (int i = 0; i < asteroidsToSpawn; i++) {
-                GameObject target = selectRandomTarget();
-                new Asteroid((int)random(0, width), 0,(int)target.position.x,(int)target.position.y, random(0.5f, 10f), width * random(0.025f, 0.05f));
+                int x = (int)random(0, width);
+                int y = 0;
+                Target target = selectRandomTarget();
+                int targetX = Utility.randomXOffsetWithinBounds((int)target.position.x, 0.2f);
+                int targetY = groundHeight;
+                float size = width * random(0.025f, 0.05f);
+                if (random(1) < clusterChance) {    
+                    new ClusterAsteroid(x, y, targetX, targetY, size, maxFragments);
+                }
+                else{
+                    new Asteroid(x, y, targetX, targetY, size);
+                }
                 asteroidsSpawned++;
             }
             lastSpawn = millis();
@@ -219,8 +243,16 @@ class LevelManager {
         state = LevelState.POST_LEVEL;
     }
     
-    GameObject selectRandomTarget() {
-        //return targets.get(int(random(targets.size())));
+    Target selectRandomTarget() {
+        int randomIndex = int(random(targets.size()));
+        Iterator<Target> iterator = targets.iterator();
+        while(iterator.hasNext()) {
+            Target target = iterator.next();
+            if (randomIndex == 0) {
+                return target;
+            }
+            randomIndex--;
+        }
         return targets.peek();
     }
     

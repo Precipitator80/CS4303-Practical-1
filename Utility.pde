@@ -1,9 +1,9 @@
-static class Utility{
-    public static PVector calculateStartingVelocity(int x, int y, int targetX, int targetY, float av, float width, float height) {
+class Utility{
+    public PVector calculateStartingVelocity(int x, int y, int targetX, int targetY) {
         PVector velocity = new PVector(0, 0);
         
         // Calculate the velocity based on projectile motion.
-        //float av = gravity.gravity.y; // Vertical acceleration.
+        float av = gravity.gravity.y; // Vertical acceleration.
         float sv = (y - targetY) / (float) height; // Vertical displacement.
         if (sv > 0) {        
             // Initial vertical speed.
@@ -43,6 +43,10 @@ static class Utility{
             velocity.set(uh, 0);
         }
         return velocity;
+    }
+    
+    public int randomXOffsetWithinBounds(int previousX, float maxOffset) {
+        return constrain(previousX + (int) random( -maxOffset * width, maxOffset * width), 0, width);
     }
     
     /*

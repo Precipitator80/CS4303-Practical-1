@@ -1,4 +1,4 @@
-class Bomb extends Explosive {
+class Bomb extends Particle {
     public Bomb(int x, int y, int targetX, int targetY) {
         super(x, y, targetX, targetY, 1f, true, 0.025f * width, 0.15f * width);
         bombs.add(this);
