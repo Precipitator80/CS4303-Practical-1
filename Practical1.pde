@@ -48,6 +48,12 @@ double previous;
 double lag;
 double ms_per_update;
 
+String graphicsFolder = "Graphics/";
+float aspectRatio;
+PImage background;
+PImage city;
+PImage cityBroken;
+
 void setup() {
     // Set the screen size.
     // 1:1
@@ -58,6 +64,7 @@ void setup() {
     // 16:9
     //size(720, 405);
     size(1280, 720);
+    aspectRatio = (float) width / height;
     
     // Initialise the update timer.    
     previous = millis();
@@ -66,6 +73,14 @@ void setup() {
     
     // Create a level manager.
     levelManager = new LevelManager();
+    
+    // bg = loadImage("CityTest.jpg");
+    // bg.resize(width, height);
+    
+    background = loadImage(graphicsFolder + "Background.png");
+    background.resize(width, height);
+    city = loadImage(graphicsFolder + "City.png");
+    cityBroken = loadImage(graphicsFolder + "CityBroken.png");
 }
 
 void draw() {

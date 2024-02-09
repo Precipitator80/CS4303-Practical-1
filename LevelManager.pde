@@ -61,15 +61,35 @@ class LevelManager {
         }
     }
     
+    int Y_AXIS = 1;
+    int X_AXIS = 2;
+    color b1, b2, c1, c2;
+    
+    void setGradient(int x, int y, float w, float h, color c1, color c2, int axis) {
+        
+        noFill();
+        
+        if (axis == Y_AXIS) {  // Top to bottom gradient
+            for (int i = y; i <= y + h; i++) {
+                float inter = map(i, y, y + h, 0, 1);
+                color c = lerpColor(c1, c2, inter);
+                stroke(c);
+                line(x, i,x + w, i);
+            }
+        }  
+        else if (axis == X_AXIS) {  // Left to right gradient
+            for (int i = x; i <= x + w; i++) {
+                float inter = map(i, x, x + w, 0, 1);
+                color c = lerpColor(c1, c2, inter);
+                stroke(c);
+                line(i, y,i, y + h);
+            }
+        }
+    }
+    
     void render() {
         // Background
-        background(0);
-        
-        // Backdrop - Fill the background and draw a line for the ground.
-        stroke(backgroundColour);
-        fill(backgroundColour);
-        rectMode(CORNER);
-        rect(0, groundHeight, width, height);
+        background(background);
         
         // Foreground
         // Render all GameObjects.
@@ -125,7 +145,7 @@ class LevelManager {
             for (int potIndex = 0; potIndex < pots; potIndex++) {
                 for (int subIndex = 0; subIndex < citiesPerPot && cityIndex < cities.length; subIndex++) {
                     int x = (int) ballistas[potIndex].position.x + (subIndex + 1) * potWidth / (citiesPerPot + 1);
-                    cities[cityIndex++] = new City(x, groundHeight);
+                    cities[cityIndex++] = new City(x,(int)(height * random(0.9f, 0.95f)));
                 }
             }
         }
@@ -134,7 +154,7 @@ class LevelManager {
             for (int potIndex = 0; potIndex < pots; potIndex++) {
                 for (int subIndex = 0; subIndex < citiesPerPot && cityIndex < cities.length; subIndex++) {
                     int x = (int) ballistas[0].position.x + ((subIndex + 1) * potWidth / (citiesPerPot + 1)) * (potIndex % 2 == 0 ? - 1 : 1);
-                    cities[cityIndex++] = new City(x, groundHeight);
+                    cities[cityIndex++] = new City(x,(int)(height * random(0.9f, 0.95f)));
                 }
             }
         }
