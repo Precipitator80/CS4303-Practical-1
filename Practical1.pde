@@ -35,6 +35,7 @@ color enemyColour = GREEN;
 public final LinkedTransferQueue<Asteroid> asteroids = new LinkedTransferQueue<Asteroid>();
 public final LinkedTransferQueue<Bomb> bombs = new LinkedTransferQueue<Bomb>();
 public final LinkedTransferQueue<Explosive> explosives = new LinkedTransferQueue<Explosive>();
+public final LinkedTransferQueue<Explosion> explosions = new LinkedTransferQueue<Explosion>();
 public final LinkedTransferQueue<GameObject> gameObjects = new LinkedTransferQueue<GameObject>();
 public final LinkedTransferQueue<Target> targets = new LinkedTransferQueue<Target>();
 public final LinkedTransferQueue<Button> buttons = new LinkedTransferQueue<Button>();

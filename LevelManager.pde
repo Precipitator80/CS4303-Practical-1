@@ -141,8 +141,6 @@ class LevelManager {
         
         new OptionsButton((int)(0.8f * width),(int)(0.1f * height));
         
-        new SatelliteEnemy((int)(0.2f * height));
-        
         initialSetup = true;
     }
     
@@ -153,6 +151,9 @@ class LevelManager {
         }
         for (Bomb bomb : bombs) {
             bomb.destroy();
+        }
+        for (Explosion explosion : explosions) {
+            explosion.destroy();
         }
         
         for (Ballista ballista : ballistas) {
@@ -168,10 +169,10 @@ class LevelManager {
         minSpawnDelta = 500;
         maxSpawnDelta = 4000;
         asteroidsSpawned = 0;
-        //clusterChance = (wave / 2 - 1) * 0.05f;
-        clusterChance = 1f;
-        //minSplitTime = constrain(15000f / wave, 1000f, 4000f);
-        minSplitTime = constrain(1500f / wave, 100f, 400f);
+        clusterChance = (wave / 2 - 1) * 0.05f;
+        //clusterChance = 1f;
+        minSplitTime = constrain(15000f / wave, 1000f, 4000f);
+        //minSplitTime = constrain(1500f / wave, 100f, 400f);
         maxSplitTime = minSplitTime + 2000f;
         maxFragments = constrain((int)(wave * 0.2f), 1, 5);
         
@@ -202,9 +203,8 @@ class LevelManager {
             for (int i = 0; i < asteroidsToSpawn; i++) {
                 int x = (int)random(0, width);
                 int y = 0;
-                Target target = selectRandomTarget();
                 PVector velocity = new PVector(random( -0.001f, 0.001f), random(0.001f, 0.005f));
-                float size = width * random(0.025f, 0.05f);
+                float size = height * random(0.025f, 0.05f);
                 if (random(1) < clusterChance) {    
                     new ClusterAsteroid(x, y, velocity, 10f, 1.5f * size, maxFragments);
                 }
@@ -242,7 +242,7 @@ class LevelManager {
         state = LevelState.POST_LEVEL;
     }
     
-    Target selectRandomTarget() {
+    Target randomTarget() {
         int randomIndex = int(random(targets.size()));
         Iterator<Target> iterator = targets.iterator();
         while(iterator.hasNext()) {

@@ -3,7 +3,7 @@ public class Ballista extends Target {
     boolean selected;
     
     public Ballista(int x, int y, int ammoRemaining) {
-        super(x, y, 0.075f * width);
+        super(x, y, 0.075f * height);
         this.ammoRemaining = ammoRemaining;
     }
     
@@ -13,7 +13,7 @@ public class Ballista extends Target {
     void fire() {
         if (ammoRemaining > 0) {
             // Spawn the particle.
-            PVector velocity = Utility.calculateStartingVelocity((int)position.x, (int)position.y, mouseX, mouseY);
+            PVector velocity = Utility.calculateStartingVelocity((int)position.x,(int)position.y, mouseX, mouseY);
             new Bomb((int)position.x,(int)position.y, velocity);
             
             // Remove ammo.
@@ -69,8 +69,8 @@ public class Ballista extends Target {
             }
             textAlign(CENTER);
             fill(255);
-            textSize(width / 25);
-            text(textToShow, position.x, position.y + width / 15);
+            textSize(height / 25);
+            text(textToShow, position.x, position.y + height / 15);
         }
         else{
             fill(backgroundColour);

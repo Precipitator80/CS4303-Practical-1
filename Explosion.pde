@@ -21,6 +21,16 @@ class Explosion extends GameObject {
                 }
             }
         }
+        
+        explosions.add(this);
+    }
+    
+    
+    void destroy() {
+        if (!destroyed()) {
+            super.destroy();
+            explosions.remove(this);
+        }
     }
     
     void update() {

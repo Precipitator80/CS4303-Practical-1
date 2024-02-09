@@ -1,6 +1,6 @@
 public class City extends Target {
     public City(int x, int y) {
-        super(x, y, 0.075f * width);
+        super(x, y, 0.075f * height);
     }
     
     void update() {
