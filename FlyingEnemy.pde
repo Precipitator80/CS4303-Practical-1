@@ -1,5 +1,6 @@
 abstract class FlyingEnemy extends GameObject {
     float size;
+    int directionMultiplier;
     PVector velocity;
     float minFireTime;
     float maxFireTime;
@@ -9,7 +10,7 @@ abstract class FlyingEnemy extends GameObject {
     public FlyingEnemy(int y, float minFireTime, float maxFireTime) {
         super((int)random(2) * width, y);
         size = 0.1f * height;
-        int directionMultiplier = (position.x == 0) ? 1 : - 1;
+        directionMultiplier = (position.x == 0) ? 1 : - 1;
         velocity = new PVector(0.0015f * width * directionMultiplier, 0f);
         
         this.minFireTime = minFireTime;
@@ -28,6 +29,8 @@ abstract class FlyingEnemy extends GameObject {
             fire();
             resetTime();
         }
+        
+        Utility.destroyIfOutOfBounds(this, 2f * size);
     }
     
     void resetTime() {

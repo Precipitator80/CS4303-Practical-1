@@ -1,6 +1,5 @@
 class LevelManager {
     // Setup variables
-    int groundHeight;
     boolean initialSetup = false;
     
     // Level parameters
@@ -20,7 +19,7 @@ class LevelManager {
     float clusterChance;
     float minSplitTime;
     float maxSplitTime;
-    int maxFragments;
+    int clusterSize;
     
     // Ballistas
     Ballista[] ballistas;
@@ -121,9 +120,6 @@ class LevelManager {
     
     //// State: WELCOME
     void initialSetup() {
-        // Set the ground height.
-        groundHeight = (int)(0.95f * height);
-        
         // Place ballistas on the screen and select the middle one.
         ballistas = new Ballista[numberOfBallistas];
         for (int i = 0; i < ballistas.length; i++) {
@@ -161,6 +157,9 @@ class LevelManager {
         
         new OptionsButton((int)(0.8f * width),(int)(0.1f * height));
         
+        new BomberEnemy();
+        new SatelliteEnemy();
+        
         initialSetup = true;
     }
     
@@ -194,7 +193,7 @@ class LevelManager {
         minSplitTime = constrain(15000f / wave, 1000f, 4000f);
         //minSplitTime = constrain(1500f / wave, 100f, 400f);
         maxSplitTime = minSplitTime + 2000f;
-        maxFragments = constrain((int)(wave * 0.2f), 1, 5);
+        clusterSize = constrain(1 + (int)(wave * 0.2f), 2, 4);
         
         spawnAsteroids(3);       
         
@@ -224,9 +223,9 @@ class LevelManager {
                 int x = (int)random(0, width);
                 int y = 0;
                 PVector velocity = new PVector(random( -0.001f, 0.001f), random(0.001f, 0.005f));
-                float size = height * random(0.025f, 0.05f);
+                float size = height * random(0.05f, 0.075f);
                 if (random(1) < clusterChance) {    
-                    new ClusterAsteroid(x, y, velocity, 10f, 1.5f * size, maxFragments);
+                    new ClusterAsteroid(x, y, velocity, 10f, size, clusterSize);
                 }
                 else{
                     new Asteroid(x, y, velocity, 5f, size);

@@ -16,7 +16,7 @@ class Explosive extends GameObject {
     }
     
     void update() {
-        if (position.y >= levelManager.groundHeight) {
+        if (position.y >= groundHeight) {
             explode();
         }
         

@@ -56,6 +56,6 @@ abstract class Particle extends GameObject {
         integrate();
         
         // Destroy the particle if it goes out of bounds horizontally.
-        Utility.destroyIfOutOfBounds(this);
+        Utility.destroyIfOutOfBounds(this, size);
     }
 }

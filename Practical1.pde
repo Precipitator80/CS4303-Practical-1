@@ -42,6 +42,7 @@ public final LinkedTransferQueue<Button> buttons = new LinkedTransferQueue<Butto
 
 //// Late initialisation.
 LevelManager levelManager;
+int groundHeight;
 
 // Update manager
 double previous;
@@ -53,6 +54,13 @@ float aspectRatio;
 PImage background;
 PImage city;
 PImage cityBroken;
+PImage cluster4;
+PImage cluster3;
+PImage cluster2;
+PImage cluster1;
+PImage asteroid;
+PImage bomber;
+PImage missile;
 
 void setup() {
     // Set the screen size.
@@ -81,6 +89,16 @@ void setup() {
     background.resize(width, height);
     city = loadImage(graphicsFolder + "City.png");
     cityBroken = loadImage(graphicsFolder + "CityBroken.png");
+    cluster4 = loadImage(graphicsFolder + "Cluster4.png");
+    cluster3 = loadImage(graphicsFolder + "Cluster3.png");
+    cluster2 = loadImage(graphicsFolder + "Cluster2.png");
+    cluster1 = loadImage(graphicsFolder + "Cluster1.png");
+    asteroid = loadImage(graphicsFolder + "Asteroid.png");
+    bomber = loadImage(graphicsFolder + "Bomber.png");
+    missile = loadImage(graphicsFolder + "Missile.png");
+    
+    // Set the ground height.
+    groundHeight = (int)(0.95f * height);
 }
 
 void draw() {

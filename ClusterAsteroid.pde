@@ -1,23 +1,36 @@
 class ClusterAsteroid extends Asteroid {
-    int maxFragments;
+    int clusterSize;
     
     double spawnTime;
     double splitTime;
     
-    public ClusterAsteroid(int x, int y, PVector velocity, float invMass, float size, int maxFragments) {
+    public ClusterAsteroid(int x, int y, PVector velocity, float invMass, float size, int clusterSize) {
         super(x, y, velocity, invMass, size);
-        this.maxFragments = maxFragments;
+        this.clusterSize = constrain(clusterSize, 1, 4);
         resetTime();
     }
     
     void resetTime() {        
         spawnTime = millis();
         splitTime = random(levelManager.minSplitTime, levelManager.maxSplitTime);
+        switch(clusterSize) {
+            case 4:
+                image = cluster4;
+                break;
+            case 2:
+                image = cluster2;
+                break;
+            case 1:
+                image = cluster1;
+                break;
+            default:
+            image = cluster3;
+        }
     }
     
     void update() {
         super.update();
-        if (maxFragments > 0) {
+        if (clusterSize > 1) {
             double elapsed = millis() - spawnTime;
             if (elapsed > splitTime) {
                 spawnCluster();
@@ -26,15 +39,12 @@ class ClusterAsteroid extends Asteroid {
     }
     
     void spawnCluster() {
-        int asteroidsToSpawn = (int)random(1,maxFragments);
-        size /= (asteroidsToSpawn + 1);
-        explosive.explosionSize /= (asteroidsToSpawn + 1);
-        invMass *= (asteroidsToSpawn + 1);
-        maxFragments--;
-        for (int i = 0; i < asteroidsToSpawn; i++) {
-            float randomVelocityChange = random(0.0005f, 0.002f) * ((int)random(2) == 0 ? 1 : - 1);
-            new ClusterAsteroid((int)position.x,(int)position.y, velocity.copy().add(new PVector(randomVelocityChange, 0f)), invMass, size, maxFragments);
-        }
+        size /= 2;
+        explosive.explosionSize /= 2;
+        invMass *= 2;
+        clusterSize--;
+        float randomVelocityChange = random(0.0005f, 0.002f) * ((int)random(2) == 0 ? 1 : - 1);
+        new ClusterAsteroid((int)position.x,(int)position.y, velocity.copy().add(new PVector(randomVelocityChange, 0f)), invMass, size, clusterSize);
         resetTime();
     }
 }

@@ -49,11 +49,11 @@ class Utility{
         return constrain(previousX + (int) random( -maxOffset * width, maxOffset * width), 0, width);
     }
     
-    public void destroyIfOutOfBounds(GameObject gameObject) {
-        if (gameObject.position.x < 0) {
+    public void destroyIfOutOfBounds(GameObject gameObject, float size) {
+        if (gameObject.position.x < 0 - size / 2) {
             gameObject.destroy();
         }   
-        if (gameObject.position.x > width) {
+        if (gameObject.position.x > width + size / 2) {
             gameObject.destroy();
         }
     }
