@@ -181,9 +181,9 @@ class LevelManager {
         asteroidsSpawned = 0;
         clusterChance = (wave / 2 - 1) * 0.05f;
         //clusterChance = 1f;
-        minSplitTime = constrain(15000f / wave, 1000f, 4000f);
+        minSplitTime = constrain(1000f + 1000f / wave, 1000f, 4000f);
         //minSplitTime = constrain(1500f / wave, 100f, 400f);
-        maxSplitTime = minSplitTime + 2000f;
+        maxSplitTime = minSplitTime + 3000f / wave;
         clusterSize = constrain(1 + (int)(wave * 0.2f), 2, 4);
         
         spawnAsteroids(3);       
@@ -293,7 +293,7 @@ class LevelManager {
             ballistas[selectedBallista].selected = true;
             
             // Break out of the loop if the selected ballista is not disabled.
-            if (!ballistas[selectedBallista].disabled()) {
+            if (!ballistas[selectedBallista].disabled() && ballistas[selectedBallista].ammoRemaining > 0) {
                 break;
             }   
         }
