@@ -56,7 +56,7 @@ class Explosion extends GameObject {
     }
     
     void render() {
-        stroke(col);
+        stroke(0,0,0,0);
         fill(col);
         circle(position.x, position.y, size);
     }

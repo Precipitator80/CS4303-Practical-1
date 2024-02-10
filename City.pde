@@ -16,6 +16,5 @@ public class City extends Target {
             fill(backgroundColour);
             image(Graphics.cityBroken, position.x, position.y, 1.61f * size, size);
         }
-        //circle(position.x, position.y, size);
     }
 }

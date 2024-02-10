@@ -3,6 +3,7 @@ public class Graphics {
     PImage background;
     PImage city;
     PImage cityBroken;
+    PImage crosshair;
     PImage cluster4;
     PImage cluster3;
     PImage cluster2;
@@ -23,6 +24,7 @@ public class Graphics {
         background.resize(width, height);
         city = loadImageWithFolder("City.png");
         cityBroken = loadImageWithFolder("CityBroken.png");
+        crosshair = loadImageWithFolder("Crosshair.png");
         cluster4 = loadImageWithFolder("Cluster4.png");
         cluster3 = loadImageWithFolder("Cluster3.png");
         cluster2 = loadImageWithFolder("Cluster2.png");
