@@ -30,6 +30,7 @@ class LevelManager {
     // Cities
     City[] cities;
     int numberOfCities = 6;
+    int freeCitiesUsed;
     
     //// General functions.
     void update() {
@@ -179,8 +180,20 @@ class LevelManager {
             ballista.repair();
             ballista.ammoRemaining = ballistaBaseAmmo;
         }
-        for (City city : cities) {
-            city.repair();
+        
+        if (wave == 0) {
+            for (City city : cities) {
+                city.repair();
+            }
+        }
+        else{
+            int freeCitiesEarned = score / 10000;
+            for (City city : cities) {
+                if (freeCitiesUsed - freeCitiesEarned > 0 && city.disabled()) {
+                    city.repair();
+                    freeCitiesUsed++;
+                }
+            }
         }
         
         wave++;
