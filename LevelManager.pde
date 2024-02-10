@@ -1,7 +1,4 @@
-class LevelManager {
-    // Setup variables
-    boolean initialSetup = false;
-    
+class LevelManager {    
     // Level parameters
     LevelState state = LevelState.WELCOME;
     int wave = 0;
@@ -23,13 +20,10 @@ class LevelManager {
     
     // Ballistas
     Ballista[] ballistas;
-    int numberOfBallistas = 3;
-    int ballistaBaseAmmo = 10;
     int selectedBallista;
     
     // Cities
     City[] cities;
-    int numberOfCities = 6;
     int freeCitiesUsed;
     
     //// General functions.
@@ -47,11 +41,6 @@ class LevelManager {
         }
         
         switch(state) {
-            case WELCOME:
-                if (!initialSetup) {
-                    initialSetup();
-                }
-                break;
             case PRE_LEVEL:
                 setupLevel();
                 break;
@@ -72,16 +61,15 @@ class LevelManager {
             iterator.next().render();
         }
         
-        // Show the score.
-        textAlign(LEFT);
+        // Show a message on the game's state to the player.
         fill(255);
         textSize(width / 25);
-        text("Score: " + score + "\nWave: " + wave, width / 100, width / 25);
-        
         textAlign(CENTER);
         switch(state) {
             case WELCOME:
-                text("Welcome to Asteroid Command!\nPress enter to start the game.", width / 2, height / 2 - width / 25);
+                if (!OptionsMenu.enabled()) {
+                    text("Welcome to Asteroid Command!\nPress enter to start the game.", width / 2, height / 2 - width / 25);
+                }
                 break;
             case POST_LEVEL:
                 text("Wave " + wave + " completed!\nPress enter to continue.", width / 2, height / 2 - width / 25);
@@ -92,26 +80,42 @@ class LevelManager {
             
         }
         
+        // Show the score.
+        if (state != LevelState.WELCOME) {
+            textAlign(LEFT);
+            text("Score: " + score + "\nWave: " + wave, width / 100, width / 25);
+        }
+        
         // Draw the crosshair.
         noCursor();
         image(Graphics.crosshair, mouseX, mouseY, height / 15, height / 15);
     }
     
     //// State: WELCOME
-    void initialSetup() {
+    void initialSetup() {        
         // Place ballistas on the screen and select the middle one.
-        ballistas = new Ballista[numberOfBallistas];
+        if (ballistas != null) {
+            for (Ballista ballista : ballistas) {
+                ballista.destroy();
+            }
+        }
+        ballistas = new Ballista[OptionsMenu.numberOfBallistas.value];
         for (int i = 0; i < ballistas.length; i++) {
             int xOffset = (int)(0.1f * width);
             int x = ballistas.length > 1 ? i * ((width - xOffset) / (ballistas.length - 1)) + xOffset / 2 : width / 2; 
             int y = (int)(0.9f * height);
-            ballistas[i] = new Ballista(x, y, ballistaBaseAmmo);
+            ballistas[i] = new Ballista(x, y, OptionsMenu.startingAmmo.value);
         }
         selectedBallista = ballistas.length / 2;
         ballistas[selectedBallista].selected = true;
         
         // Spawn cities.
-        cities = new City[numberOfCities];
+        if (cities != null) {
+            for (City city : cities) {
+                city.destroy();
+            }
+        }
+        cities = new City[OptionsMenu.numberOfCities.value];
         int pots = ballistas.length > 1 ? ballistas.length - 1 : 2;
         int citiesPerPot = ceil((float) cities.length / pots);
         int cityIndex = 0;
@@ -134,12 +138,8 @@ class LevelManager {
             }
         }
         
-        new OptionsButton((int)(0.8f * width),(int)(0.1f * height));
-        
         new BomberEnemy();
         new SatelliteEnemy();
-        
-        initialSetup = true;
     }
     
     //// State: PRE_LEVEL
@@ -156,7 +156,7 @@ class LevelManager {
         
         for (Ballista ballista : ballistas) {
             ballista.repair();
-            ballista.ammoRemaining = ballistaBaseAmmo;
+            ballista.ammoRemaining = OptionsMenu.startingAmmo.value;
         }
         
         if (wave == 0) {
@@ -240,7 +240,7 @@ class LevelManager {
     
     void finishWave() {
         for (Ballista ballista : ballistas) {
-            if (!ballista.disabled()) {
+            if (!OptionsMenu.infiniteAmmo.value && !ballista.disabled()) {
                 addPoints(ballista.ammoRemaining * 5);
             }
         }
@@ -266,9 +266,10 @@ class LevelManager {
     }
     
     //// State: GAME_OVER
-    void resetParameters() {
+    void resetGame() {
         wave = 0;
         score = 0;
+        OptionsMenu.entryButton.enabled = true;
     }
     
     //// Other Functions
@@ -337,8 +338,8 @@ class LevelManager {
                 // Else, explode the earliest bomb fired.
                 if (!bombs.isEmpty()) {
                     Bomb bomb = bombs.peek();
-                    float closestDistance = Float.MAX_VALUE;
-                    if (!mouseAtEdge()) {
+                    if (OptionsMenu.hybridControlScheme.value && !mouseAtEdge()) {
+                        float closestDistance = Float.MAX_VALUE;
                         Iterator<Bomb> iterator = bombs.iterator();
                         while(iterator.hasNext()) {
                             Bomb potentialBomb = iterator.next();
@@ -353,13 +354,16 @@ class LevelManager {
                 }
                 break;
             case ENTER:
-                switch(state) {
-                    case GAME_OVER:
-                    resetParameters();
-                    case WELCOME:
-                    case POST_LEVEL:
-                    state = LevelState.PRE_LEVEL;
-                    break;   
+                if (!OptionsMenu.enabled()) {
+                    switch(state) {
+                        case GAME_OVER:
+                        resetGame();
+                        case WELCOME:
+                        case POST_LEVEL:
+                        OptionsMenu.entryButton.enabled = false;
+                        state = LevelState.PRE_LEVEL;
+                        break;
+                }
             }
             break;
         }

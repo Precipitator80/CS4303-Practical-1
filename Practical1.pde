@@ -6,9 +6,9 @@ import java.util.LinkedList;
 import java.util.concurrent.LinkedTransferQueue;
 
 //// Final values
-final color RED = color(255,45,50);
-final color GREEN = color(155,200,100);
-final color BLUE = color(45,60,190);
+final color BLUE = color(40, 170, 250);
+final color fillColour = BLUE;
+final color strokeColour = color(255);
 
 //// Early initialisation.
 // Force registry
@@ -28,9 +28,6 @@ final Utility Utility = new Utility();
 //final Drag drag = new Drag(0.003f, 0.003f); // Quadratic Drag
 final Drag drag = new Drag(0.003f, 0f); // Linear Drag
 
-color backgroundColour = RED;
-color playerColour = BLUE;
-color enemyColour = GREEN;
 
 public final LinkedTransferQueue<Asteroid> asteroids = new LinkedTransferQueue<Asteroid>();
 public final LinkedTransferQueue<Bomb> bombs = new LinkedTransferQueue<Bomb>();
@@ -41,9 +38,10 @@ public final LinkedTransferQueue<Target> targets = new LinkedTransferQueue<Targe
 public final LinkedTransferQueue<Button> buttons = new LinkedTransferQueue<Button>();
 
 //// Late initialisation.
-LevelManager levelManager;
 Audio Audio;
 Graphics Graphics;
+OptionsMenu OptionsMenu;
+LevelManager levelManager;
 
 int groundHeight;
 
@@ -72,10 +70,17 @@ void setup() {
     lag = 0.0;
     ms_per_update = 1000.0 / frameRate;
     
-    // Create a level manager.
-    levelManager = new LevelManager();
+    // Load all assets.
     Audio = new Audio(this);
     Graphics = new Graphics();
+    
+    // Initialise the options menu.
+    OptionsMenu = new OptionsMenu();
+    OptionsMenu.entryButton.enabled = true;
+    
+    // Create a level manager.
+    levelManager = new LevelManager();
+    levelManager.initialSetup();
     
     // Set the ground height.
     groundHeight = (int)(0.95f * height);

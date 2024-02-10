@@ -1,12 +1,13 @@
 abstract class Button extends GameObject {
     private int w;
     private int h;
-    private String text;
+    protected String text;
     public boolean mouseOver;
+    public boolean enabled;
     
     public Button(int x, int y, String text) {
         super(x,y);
-        w = width / 5;
+        w = text.length() * width / 40;
         h = height / 10;
         this.text = text;
         buttons.add(this);
@@ -20,7 +21,7 @@ abstract class Button extends GameObject {
     abstract void onClick();
     
     void update() {
-        if (mouseX >= position.x - w / 2  && mouseX <= position.x + w / 2 && 
+        if (enabled && mouseX >= position.x - w / 2  && mouseX <= position.x + w / 2 && 
             mouseY >= position.y - h / 2 && mouseY <= position.y + h / 2) {
             mouseOver = true;
         } else{
@@ -29,12 +30,15 @@ abstract class Button extends GameObject {
     }
     
     void render() {
-        fill(playerColour);
-        rectMode(CENTER);
-        rect(position.x, position.y, w, h);
-        
-        fill(backgroundColour);
-        textAlign(CENTER, CENTER);
-        text(text, position.x, position.y);
+        if (enabled) {
+            stroke(strokeColour);
+            fill(fillColour);
+            rectMode(CENTER);
+            rect(position.x, position.y, w, h);
+            
+            fill(strokeColour);
+            textAlign(CENTER, CENTER);
+            text(text, position.x, position.y);
+        }
     }
 }

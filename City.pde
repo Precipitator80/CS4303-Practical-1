@@ -9,11 +9,9 @@ public class City extends Target {
     void render() {
         imageMode(CENTER);
         if (!disabled()) {
-            fill(playerColour);
             image(Graphics.city, position.x, position.y, 1.61f * size, size);
         }
         else{
-            fill(backgroundColour);
             image(Graphics.cityBroken, position.x, position.y, 1.61f * size, size);
         }
     }

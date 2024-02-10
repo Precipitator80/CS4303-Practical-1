@@ -17,7 +17,7 @@ public class Ballista extends Target {
             new Bomb((int)position.x,(int)position.y, velocity);
             
             // Remove ammo.
-            if (levelManager.state == LevelState.LEVEL) {
+            if (!OptionsMenu.infiniteAmmo.value && levelManager.state == LevelState.LEVEL) {
                 ammoRemaining--;
                 
                 if (ammoRemaining <= 0) {
@@ -41,14 +41,15 @@ public class Ballista extends Target {
     void render() {
         if (!disabled()) {            
             // Show the ammo remaining when in a round and infinity otherwise.
-            String textToShow;
+            String textToShow = "∞";
             switch(levelManager.state) {
                 case POST_LEVEL:
                     case LEVEL:
-                    textToShow = Integer.toString(ammoRemaining);
-                    break;
+                    if (!OptionsMenu.infiniteAmmo.value) {
+                        textToShow = Integer.toString(ammoRemaining);
+                }
+                break;
                 default:
-                textToShow = "∞";
             }
             textAlign(CENTER);
             fill(255);
@@ -58,7 +59,7 @@ public class Ballista extends Target {
             // To show selected, draw a circle around the turret with transparent shape but player colour  outline.
             if (selected) {
                 strokeWeight(size / 10);
-                stroke(playerColour);
+                stroke(fillColour);
                 fill(0,0,0,0);
                 circle(position.x, position.y, 1.5f * size);
             }
