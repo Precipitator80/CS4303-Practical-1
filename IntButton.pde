@@ -12,8 +12,8 @@ class IntButton extends Button {
     }
     
     void render() {
-        super.render();
         text = optionName + ": " + value;
+        super.render();
     }
     
     void onClick() {

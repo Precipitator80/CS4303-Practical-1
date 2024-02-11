@@ -61,29 +61,28 @@ class LevelManager {
             iterator.next().render();
         }
         
-        // Show a message on the game's state to the player.
-        fill(255);
-        textSize(width / 25);
-        textAlign(CENTER);
-        switch(state) {
-            case WELCOME:
-                if (!OptionsMenu.enabled()) {
+        if (!OptionsMenu.enabled() && !ShopMenu.enabled()) {
+            // Show a message on the game's state to the player.
+            fill(255);
+            textSize(width / 25);
+            textAlign(CENTER);
+            switch(state) {
+                case WELCOME:
                     text("Welcome to Asteroid Command!\nPress enter to start the game.", width / 2, height / 2 - width / 25);
-                }
-                break;
-            case POST_LEVEL:
-                text("Wave " + wave + " completed!\nPress enter to continue.", width / 2, height / 2 - width / 25);
-                break;
-            case GAME_OVER:
-                text("Game over!\nPress enter to restart.", width / 2, height / 2 - width / 25);
-                break;
+                    break;
+                case POST_LEVEL:
+                    text("Wave " + wave + " completed!\nPress enter to continue.", width / 2, height / 2 - width / 25);
+                    break;
+                case GAME_OVER:
+                    text("Game over!\nPress enter to restart.", width / 2, height / 2 - width / 25);
+                    break;
+            }
             
-        }
-        
-        // Show the score.
-        if (state != LevelState.WELCOME) {
-            textAlign(LEFT);
-            text("Score: " + score + "\nWave: " + wave, width / 100, width / 25);
+            // Show the score.
+            if (state != LevelState.WELCOME) {
+                textAlign(LEFT);
+                text("Score: " + score + "\nWave: " + wave, width / 100, width / 25);
+            }
         }
         
         // Draw the crosshair.
@@ -156,7 +155,7 @@ class LevelManager {
         
         for (Ballista ballista : ballistas) {
             ballista.repair();
-            ballista.ammoRemaining = OptionsMenu.startingAmmo.value;
+            ballista.ammoRemaining = OptionsMenu.startingAmmo.value + ShopMenu.extraAmmo.timesBought;
         }
         
         if (wave == 0) {
@@ -167,7 +166,7 @@ class LevelManager {
         else{
             int freeCitiesEarned = score / 10000;
             for (City city : cities) {
-                if (freeCitiesUsed - freeCitiesEarned > 0 && city.disabled()) {
+                if (freeCitiesEarned - freeCitiesUsed > 0 && city.disabled()) {
                     city.repair();
                     freeCitiesUsed++;
                 }
@@ -205,6 +204,7 @@ class LevelManager {
         
         if (citiesLeft() <= 0) {
             state = LevelState.GAME_OVER;
+            OptionsMenu.entryButton.show();
         }
     }
     
@@ -250,6 +250,7 @@ class LevelManager {
             }
         }
         state = LevelState.POST_LEVEL;
+        ShopMenu.entryButton.show();
     }
     
     Target randomTarget() {
@@ -269,7 +270,6 @@ class LevelManager {
     void resetGame() {
         wave = 0;
         score = 0;
-        OptionsMenu.entryButton.enabled = true;
     }
     
     //// Other Functions
@@ -354,13 +354,14 @@ class LevelManager {
                 }
                 break;
             case ENTER:
-                if (!OptionsMenu.enabled()) {
+                if (!OptionsMenu.enabled() && !ShopMenu.enabled()) {
                     switch(state) {
                         case GAME_OVER:
                         resetGame();
                         case WELCOME:
                         case POST_LEVEL:
-                        OptionsMenu.entryButton.enabled = false;
+                        OptionsMenu.entryButton.hide();
+                        ShopMenu.entryButton.hide();
                         state = LevelState.PRE_LEVEL;
                         break;
                 }

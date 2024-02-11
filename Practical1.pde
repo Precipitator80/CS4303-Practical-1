@@ -42,6 +42,7 @@ Audio Audio;
 Graphics Graphics;
 OptionsMenu OptionsMenu;
 LevelManager levelManager;
+ShopMenu ShopMenu;
 
 int groundHeight;
 
@@ -76,11 +77,14 @@ void setup() {
     
     // Initialise the options menu.
     OptionsMenu = new OptionsMenu();
-    OptionsMenu.entryButton.enabled = true;
+    OptionsMenu.entryButton.show();
     
     // Create a level manager.
     levelManager = new LevelManager();
     levelManager.initialSetup();
+    
+    // Initialise the shop.
+    ShopMenu = new ShopMenu();
     
     // Set the ground height.
     groundHeight = (int)(0.95f * height);

@@ -6,6 +6,6 @@ public class ExitButton extends Button {
     }
     
     void onClick() {
-        menu.close();
+        menu.hide();
     }
 }
