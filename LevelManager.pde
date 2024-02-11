@@ -164,7 +164,7 @@ class LevelManager {
             }
         }
         else{
-            int freeCitiesEarned = score / 10000;
+            int freeCitiesEarned = (int)(OptionsMenu.creditsMultiplier.value * score / 10000);
             for (City city : cities) {
                 if (freeCitiesEarned - freeCitiesUsed > 0 && city.disabled()) {
                     city.repair();

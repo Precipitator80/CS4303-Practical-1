@@ -12,7 +12,7 @@ class Bomb extends Particle {
         Audio.fire.play(1, Audio.audioPan(position.x), 0.25f);
         
         // Add an explosive component.
-        explosive = new Explosive(this, true, size, size * 3f, true, Audio.explosion);
+        explosive = new Explosive(this, true, size, size * 3f * (1f + 0.1f * ShopMenu.explosionSize.timesBought), true, Audio.explosion);
     }
     
     void destroy() {

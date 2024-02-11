@@ -4,6 +4,8 @@ class OptionsMenu extends Menu {
     public IntButton startingAmmo;
     public BoolButton infiniteAmmo;
     public IntButton numberOfCities;
+    public FloatButton creditsMultiplier;
+    
     public OptionsMenu() {
         super("Options");
     }
@@ -23,6 +25,9 @@ class OptionsMenu extends Menu {
         
         numberOfCities = new IntButton((int)position.x,(int)position.y, "City Count", 6, 1, 10);
         menuItems.add(numberOfCities);
+        
+        creditsMultiplier = new FloatButton((int)position.x,(int)position.y, "Credits Multiplier", 1f, 0f, 10f, 0.5f);
+        menuItems.add(creditsMultiplier);
     }
     
     void hide() {

@@ -1,13 +1,15 @@
-class IntButton extends Button {
+class FloatButton extends Button {
     String optionName;
-    int minValue;
-    int maxValue;
-    int value;
-    public IntButton(int x, int y, String optionName, int initialValue, int minValue, int maxValue) {
+    float minValue;
+    float maxValue;
+    float value;
+    float step;
+    public FloatButton(int x, int y, String optionName, float initialValue, float minValue, float maxValue, float step) {
         super(x, y, optionName);
         this.optionName = optionName;
         this.minValue = minValue;
         this.maxValue = maxValue;
+        this.step = step;
         value = initialValue;
     }
     
@@ -18,13 +20,13 @@ class IntButton extends Button {
     
     void onClick() {
         if (mouseButton == RIGHT) {
-            value--;
+            value -= step;
             if (value < minValue) {
                 value = maxValue;
             }
         }
         else{
-            value++;
+            value += step;
             if (value > maxValue) {
                 value = minValue;
             }

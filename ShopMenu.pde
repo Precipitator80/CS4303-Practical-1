@@ -1,14 +1,18 @@
 class ShopMenu extends Menu {    
     int moneySpent;
     ShopListing extraAmmo;
+    ShopListing explosionSize;
     
     public ShopMenu() {
         super("Shop");
     }
     
     void initialise() {
-        extraAmmo = new ShopListing((int) this.position.x,(int)this.position.y, "Extra Ammo", 100);
+        extraAmmo = new ShopListing((int) this.position.x,(int) this.position.y, "Extra Ammo", 100);
         menuItems.add(extraAmmo);
+        
+        explosionSize = new ShopListing((int) this.position.x,(int) this.position.y, "Explosion Size", 150);
+        menuItems.add(explosionSize);
     }
     
     void resetListings() {
@@ -19,6 +23,17 @@ class ShopMenu extends Menu {
     }
     
     int totalMoneyEarned() {
-        return levelManager.score / 10;
+        return(int)(OptionsMenu.creditsMultiplier.value * levelManager.score / 10);
+    }
+    
+    int moneyAvailable() {
+        return totalMoneyEarned() - moneySpent;
+    }
+    
+    void render() {
+        if (enabled()) {
+            extraText = " (Credits: " + moneyAvailable() + ")";
+            super.render();
+        }
     }
 }
