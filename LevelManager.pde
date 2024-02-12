@@ -175,8 +175,8 @@ class LevelManager {
         
         wave++;
         asteroidCount = 3 + 2 * wave;
-        minSpawnDelta = 500;
-        maxSpawnDelta = 4000;
+        minSpawnDelta = 250 + 500 / wave;
+        maxSpawnDelta =  minSpawnDelta + 500 + 5000 / wave;
         asteroidsSpawned = 0;
         clusterChance = (wave / 2 - 1) * 0.05f;
         //clusterChance = 1f;
@@ -184,6 +184,8 @@ class LevelManager {
         //minSplitTime = constrain(1500f / wave, 100f, 400f);
         maxSplitTime = minSplitTime + 3000f / wave;
         clusterSize = constrain(1 + (int)(wave * 0.2f), 2, 4);
+        flyingEnemyCount = random(asteroidCount / 8 + 1);
+        flyingEnemiesSpawned = 0;
         
         spawnAsteroids(3);       
         
@@ -221,6 +223,12 @@ class LevelManager {
                 else{
                     new Asteroid(x, y, velocity, 5f, size);
                 }
+                
+                int flyingEnemyInterval = asteroidCount / flyingEnemyCount;
+                if (asteroidsSpawned % flyingEnemyInterval == 0) {
+                    new FlyingEnemy();
+                }
+                
                 asteroidsSpawned++;
             }
             lastSpawn = millis();
