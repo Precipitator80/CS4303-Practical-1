@@ -68,7 +68,7 @@ class LevelManager {
             textAlign(CENTER);
             switch(state) {
                 case WELCOME:
-                    text("Welcome to Asteroid Command!\nPress enter to start the game.", width / 2, height / 2 - width / 25);
+                    text("Welcome to Asteroid Defence!\nPress enter to start the game.", width / 2, height / 2 - width / 25);
                     break;
                 case POST_LEVEL:
                     text("Wave " + wave + " completed!\nPress enter to continue.", width / 2, height / 2 - width / 25);
