@@ -4,7 +4,7 @@ class Asteroid extends Particle {
     
     public Asteroid(int x, int y, PVector velocity, float invMass, float size) {
         super(x, y, velocity, invMass, size);
-        asteroids.add(this);
+        enemies.add(this);
         
         // Add an explosive component.
         explosive = new Explosive(this, false, size, size * 2f, false, Audio.explosion);
@@ -14,7 +14,7 @@ class Asteroid extends Particle {
     void destroy() {
         if (!destroyed()) {
             super.destroy();
-            asteroids.remove(this);
+            enemies.remove(this);
             explosive.destroy();
         }
     }

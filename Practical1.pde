@@ -28,8 +28,7 @@ final Utility Utility = new Utility();
 //final Drag drag = new Drag(0.003f, 0.003f); // Quadratic Drag
 final Drag drag = new Drag(0.003f, 0f); // Linear Drag
 
-
-public final LinkedTransferQueue<Asteroid> asteroids = new LinkedTransferQueue<Asteroid>();
+public final LinkedTransferQueue<GameObject> enemies = new LinkedTransferQueue<GameObject>();
 public final LinkedTransferQueue<Bomb> bombs = new LinkedTransferQueue<Bomb>();
 public final LinkedTransferQueue<Explosive> explosives = new LinkedTransferQueue<Explosive>();
 public final LinkedTransferQueue<Explosion> explosions = new LinkedTransferQueue<Explosion>();

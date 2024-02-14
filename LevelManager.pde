@@ -18,6 +18,10 @@ class LevelManager {
     float maxSplitTime;
     int clusterSize;
     
+    // Flying enemies
+    int flyingEnemyCount;
+    int flyingEnemiesSpawned;
+    
     // Ballistas
     Ballista[] ballistas;
     int selectedBallista;
@@ -136,15 +140,12 @@ class LevelManager {
                 }
             }
         }
-        
-        new BomberEnemy();
-        new SatelliteEnemy();
     }
     
     //// State: PRE_LEVEL
     void setupLevel() {
-        for (Asteroid asteroid : asteroids) {
-            asteroid.destroy();
+        for (GameObject enemy : enemies) {
+            enemy.destroy();
         }
         for (Bomb bomb : bombs) {
             bomb.destroy();
@@ -184,7 +185,7 @@ class LevelManager {
         //minSplitTime = constrain(1500f / wave, 100f, 400f);
         maxSplitTime = minSplitTime + 3000f / wave;
         clusterSize = constrain(1 + (int)(wave * 0.2f), 2, 4);
-        flyingEnemyCount = random(asteroidCount / 8 + 1);
+        flyingEnemyCount = (int) random(asteroidCount / 8 + 1);
         flyingEnemiesSpawned = 0;
         
         spawnAsteroids(3);       
@@ -200,7 +201,7 @@ class LevelManager {
             spawnAsteroids(1);
         }
         
-        if (asteroidsSpawned >= asteroidCount && asteroids.isEmpty()) {
+        if (asteroidsSpawned >= asteroidCount && enemies.size() <= 0) {
             finishWave();
         }
         
@@ -224,9 +225,16 @@ class LevelManager {
                     new Asteroid(x, y, velocity, 5f, size);
                 }
                 
-                int flyingEnemyInterval = asteroidCount / flyingEnemyCount;
-                if (asteroidsSpawned % flyingEnemyInterval == 0) {
-                    new FlyingEnemy();
+                if (flyingEnemyCount > 0) {
+                    int flyingEnemyInterval = asteroidCount / flyingEnemyCount;
+                    if (asteroidsSpawned % flyingEnemyInterval == 0) {
+                        if (random(1) < 0.4f) {
+                            new BomberEnemy();
+                        }
+                        else{
+                            new SatelliteEnemy();
+                        }
+                    }
                 }
                 
                 asteroidsSpawned++;
@@ -278,6 +286,7 @@ class LevelManager {
     void resetGame() {
         wave = 0;
         score = 0;
+        ShopMenu.resetListings();
     }
     
     //// Other Functions

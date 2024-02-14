@@ -18,7 +18,9 @@ class ShopMenu extends Menu {
     void resetListings() {
         moneySpent = 0;
         for (UIItem menuItem : menuItems) {
-           ((ShopListing)menuItem).reset();
+            if (menuItem instanceof ShopListing) {
+               ((ShopListing)menuItem).reset();
+            }
         }
     }
     
