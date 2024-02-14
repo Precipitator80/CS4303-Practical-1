@@ -9,6 +9,7 @@ public class Graphics {
     PImage cluster2;
     PImage cluster1;
     PImage asteroid;
+    PImage smartAsteroid;
     PImage bomber;
     PImage missile;
     PImage satellite;
@@ -30,6 +31,7 @@ public class Graphics {
         cluster2 = loadImageWithFolder("Cluster2.png");
         cluster1 = loadImageWithFolder("Cluster1.png");
         asteroid = loadImageWithFolder("Asteroid.png");
+        smartAsteroid = loadImageWithFolder("SmartAsteroid.png");
         bomber = loadImageWithFolder("Bomber.png");
         missile = loadImageWithFolder("Missile.png");
         satellite = loadImageWithFolder("Satellite.png");

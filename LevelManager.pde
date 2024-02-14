@@ -222,7 +222,8 @@ class LevelManager {
                     new ClusterAsteroid(x, y, velocity, 10f, size, clusterSize);
                 }
                 else{
-                    new Asteroid(x, y, velocity, 5f, size);
+                    //new Asteroid(x, y, velocity, 5f, size);
+                    new SmartAsteroid(x, y, velocity, 5f, size);
                 }
                 
                 if (flyingEnemyCount > 0) {

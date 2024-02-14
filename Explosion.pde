@@ -1,13 +1,15 @@
 class Explosion extends GameObject {
-    double explosionDuration = 1000.0;
+    double explosionDuration = 750.0;
     color col = color(249,182,78);
     double explosionTime;
+    float maxExtent;
     float size;
     boolean friendly;
     public Explosion(int x, int y, boolean friendly, float size, SoundFile explosionSound) {
         super(x,y);
-        explosionTime = millis();
-        this.size = size;
+        float startSizeFactor = 0.25f;
+        explosionTime = millis() - startSizeFactor * explosionDuration;
+        this.maxExtent = size;
         
         // If not friendly, destroy any destructibles within the radius.
         this.friendly = friendly;
@@ -16,7 +18,7 @@ class Explosion extends GameObject {
             while(iterator.hasNext()) {
                 Target target = iterator.next();
                 float distance = this.position.copy().sub(target.position).mag();
-                if (distance < (this.size / 2f + target.size / 2f)) {
+                if (distance < ((this.maxExtent * 0.75f) / 2f + target.size / 2f)) {
                     target.disable();
                 }
             }
@@ -39,7 +41,8 @@ class Explosion extends GameObject {
     void update() {
         // Destroy after explosion is finished.
         double elapsed = millis() - explosionTime;
-        if (elapsed > explosionDuration) {
+        this.size = (1f - (abs((float)(explosionDuration - elapsed)) / (float) explosionDuration)) * maxExtent;
+        if (elapsed > 2f * explosionDuration) {
             destroy();
         }
         
