@@ -1,18 +1,4 @@
 class Utility{
-    // public PVector calculateStartingVelocity(int x, int y, int targetX, int targetY) {
-    //     PVector velocity = new PVector(0, 0);
-    
-    //     //float alpha = drag.k1 / mass;
-    //     float ry = (y - targetY) / (float) height; // Vertical displacement.
-    //     //float time = 300f;
-    //     //float vyzero = alpha * ry - gravity.gravity.y * time;
-    //     float vyzero = -1.2f * sqrt(abs(2 * gravity.gravity.y * ry));
-    //     velocity.set(0, vyzero);
-    
-    //     return velocity;
-// }
-    
-    // Just gravity.
     public PVector calculateStartingVelocity(int x, int y, int targetX, int targetY) {
         PVector velocity = new PVector(0, 0);
         
@@ -56,6 +42,13 @@ class Utility{
             
             velocity.set(uh, 0);
         }
+        if (OptionsMenu.dragMultiplier.value != 0) {
+            //velocity.mult(sqrt(pow((targetY - y) / height, 2) + pow((targetX - x) / width, 2)));
+            
+            // Account for drag. Just use a multiplier for now. Not a perfect solution, but simple.
+            velocity.mult(1.075f * OptionsMenu.dragMultiplier.value);
+        }
+        
         return velocity;
     }
     
