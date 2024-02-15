@@ -26,7 +26,7 @@ final Utility Utility = new Utility();
 //Create a drag force
 //NB Increase k1, k2 to see an effect
 //final Drag drag = new Drag(0.003f, 0.003f); // Quadratic Drag
-final Drag drag = new Drag(0.003f, 0f); // Linear Drag
+final Drag drag = new Drag(0.0015f, 0f); // Linear Drag
 
 public final LinkedTransferQueue<GameObject> enemies = new LinkedTransferQueue<GameObject>();
 public final LinkedTransferQueue<Bomb> bombs = new LinkedTransferQueue<Bomb>();
