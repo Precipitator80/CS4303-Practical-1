@@ -4,7 +4,7 @@ class IntButton extends Button {
     int maxValue;
     int value;
     public IntButton(int x, int y, String optionName, int initialValue, int minValue, int maxValue) {
-        super(x, y, optionName);
+        super(x, y, optionName, Audio.menuSelect);
         this.optionName = optionName;
         this.minValue = minValue;
         this.maxValue = maxValue;
@@ -17,6 +17,7 @@ class IntButton extends Button {
     }
     
     void onClick() {
+        super.onClick();
         if (mouseButton == RIGHT) {
             value--;
             if (value < minValue) {

@@ -1,8 +1,10 @@
 abstract class Button extends UIItem  {
     public boolean mouseOver;
+    SoundFile clickSound;
     
-    public Button(int x, int y, String text) {
+    public Button(int x, int y, String text, SoundFile clickSound) {
         super(x,y,text);
+        this.clickSound = clickSound;
         buttons.add(this);
     }
     
@@ -11,7 +13,9 @@ abstract class Button extends UIItem  {
         buttons.remove(this);
     }
     
-    abstract void onClick();
+    void onClick() {
+        clickSound.play(1, 0.2f);
+    }
     
     void update() {
         if (enabled() && mouseX >= position.x - w / 2  && mouseX <= position.x + w / 2 && 

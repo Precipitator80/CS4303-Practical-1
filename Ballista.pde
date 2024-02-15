@@ -28,6 +28,9 @@ public class Ballista extends Target {
                 }
             }
         }
+        else {
+            Audio.noAmmo.play(1, 0.3f);
+        }
     }
     
     // Set ammo to 0 and switch ballista if this was the one selected.

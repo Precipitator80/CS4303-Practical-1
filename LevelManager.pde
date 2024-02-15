@@ -196,6 +196,8 @@ class LevelManager {
         
         // Update the state.
         state = LevelState.LEVEL;
+        
+        Audio.alarm.play(1, 0.3f);
     }
     
     //// State: LEVEL
@@ -212,6 +214,7 @@ class LevelManager {
         if (citiesLeft() <= 0) {
             state = LevelState.GAME_OVER;
             OptionsMenu.entryButton.show();
+            Audio.gameOver.play(1, 0.4f);
         }
     }
     
@@ -237,6 +240,9 @@ class LevelManager {
                 
                 if (flyingEnemyCount > 0) {
                     int flyingEnemyInterval = asteroidCount / flyingEnemyCount;
+                    if (flyingEnemyInterval == 0) {
+                        flyingEnemyInterval = 1; 
+                    }
                     if (asteroidsSpawned % flyingEnemyInterval == 0) {
                         if (random(1) < 0.4f) {
                             new BomberEnemy();
@@ -277,6 +283,7 @@ class LevelManager {
         }
         state = LevelState.POST_LEVEL;
         ShopMenu.entryButton.show();
+        Audio.win.play(1, 0.1f);
     }
     
     Target randomTarget() {

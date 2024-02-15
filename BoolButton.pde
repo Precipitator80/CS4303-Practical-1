@@ -2,7 +2,7 @@ class BoolButton extends Button {
     String optionName;
     boolean value;
     public BoolButton(int x, int y, String optionName, boolean initialValue) {
-        super(x, y, optionName);
+        super(x, y, optionName, Audio.menuSelect);
         this.optionName = optionName;
         value = initialValue;
     }
@@ -17,6 +17,7 @@ class BoolButton extends Button {
     }
     
     void onClick() {
-        value = !value; 
+        super.onClick();
+        value = !value;
     }
 }

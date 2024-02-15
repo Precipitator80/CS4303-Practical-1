@@ -11,7 +11,7 @@ public class Audio {
     SoundFile menuBack;
     SoundFile menuSelect;
     SoundFile noAmmo;
-    SoundFile satellite;
+    SoundFile satellite; // Not sure how to play this correctly.
     SoundFile win;
     
     public Audio(PApplet mainClass) {

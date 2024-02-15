@@ -5,7 +5,7 @@ class FloatButton extends Button {
     float value;
     float step;
     public FloatButton(int x, int y, String optionName, float initialValue, float minValue, float maxValue, float step) {
-        super(x, y, optionName);
+        super(x, y, optionName, Audio.menuSelect);
         this.optionName = optionName;
         this.minValue = minValue;
         this.maxValue = maxValue;
@@ -19,6 +19,7 @@ class FloatButton extends Button {
     }
     
     void onClick() {
+        super.onClick();
         if (mouseButton == RIGHT) {
             value -= step;
             if (value < minValue) {

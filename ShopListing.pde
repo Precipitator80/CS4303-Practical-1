@@ -26,6 +26,10 @@ class ShopListing extends UIItem {
             ShopMenu.moneySpent += currentPrice;
             timesBought++;
             updateCurrentPrice();
+            Audio.menuSelect.play(1, 0.2f);
+        }
+        else{
+            Audio.noAmmo.play(1, 0.3f);
         }
     }
     
@@ -34,6 +38,10 @@ class ShopListing extends UIItem {
             timesBought--;
             updateCurrentPrice();
             ShopMenu.moneySpent -= currentPrice;
+            Audio.menuSelect.play(1, 0.2f);
+        }
+        else{
+            Audio.noAmmo.play(1, 0.3f);
         }
     }
     
