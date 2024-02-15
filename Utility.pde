@@ -16,7 +16,7 @@ class Utility{
         PVector velocity = new PVector(0, 0);
         
         // Calculate the velocity based on projectile motion.
-        float av = gravity.gravity.y; // Vertical acceleration.
+        float av = gravity.gravity.y * OptionsMenu.gravityMultiplier.value; // Vertical acceleration.
         float sv = (y - targetY) / (float) height; // Vertical displacement.
         if (sv > 0) {        
             // Initial vertical speed.

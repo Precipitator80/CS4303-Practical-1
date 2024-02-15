@@ -5,6 +5,12 @@ class OptionsMenu extends Menu {
     public BoolButton infiniteAmmo;
     public IntButton numberOfCities;
     public FloatButton creditsMultiplier;
+    public FloatButton gravityMultiplier;
+    public FloatButton dragMultiplier;
+    public FloatButton asteroidSpawnCountMultiplier;
+    public FloatButton enemySpawnRateMultiplier;
+    public FloatButton asteroidVariantChanceMultiplier;
+    public FloatButton flyingEnemySpawnCountMultiplier;
     
     public OptionsMenu() {
         super("Options");
@@ -28,6 +34,24 @@ class OptionsMenu extends Menu {
         
         creditsMultiplier = new FloatButton((int)position.x,(int)position.y, "Credits Multiplier", 1f, 0f, 10f, 0.5f);
         menuItems.add(creditsMultiplier);
+        
+        gravityMultiplier = new FloatButton((int)position.x,(int)position.y, "Gravity Multiplier", 1f, 0f, 10f, 0.25f);
+        menuItems.add(gravityMultiplier);
+        
+        dragMultiplier = new FloatButton((int)position.x,(int)position.y, "Drag Multiplier", 1f, 0f, 10f, 0.25f); 
+        menuItems.add(dragMultiplier);
+        
+        asteroidSpawnCountMultiplier = new FloatButton((int)position.x,(int)position.y, "Asteroid Spawn Count Multiplier", 1f, 0.25f, 10f, 0.25f);
+        menuItems.add(asteroidSpawnCountMultiplier);
+        
+        enemySpawnRateMultiplier = new FloatButton((int)position.x,(int)position.y, "Enemy Spawn Rate Multiplier", 1f, 0.25f, 10f, 0.25f);
+        menuItems.add(enemySpawnRateMultiplier);
+        
+        asteroidVariantChanceMultiplier = new FloatButton((int)position.x,(int)position.y, "Asteroid Variant Chance Multiplier", 1f, 0f, 10f, 0.25f);
+        menuItems.add(asteroidVariantChanceMultiplier);
+        
+        flyingEnemySpawnCountMultiplier = new FloatButton((int)position.x,(int)position.y, "Flying Enemy Spawn Count Multiplier", 1f, 0f, 10f, 0.25f);
+        menuItems.add(flyingEnemySpawnCountMultiplier);
     }
     
     void hide() {

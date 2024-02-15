@@ -34,7 +34,7 @@ abstract class UIItem extends GameObject {
     }
     
     int defaultTextSize() {
-        return 4 * h / 5;
+        return(3 * h) / 5;
     }
     
     void update() {

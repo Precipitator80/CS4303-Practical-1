@@ -24,7 +24,7 @@ public final class Drag extends ForceGenerator {
         
         //Calculate the final force and apply it
         force.normalize();
-        force.mult( -dragCoeff);
+        force.mult( -dragCoeff * OptionsMenu.dragMultiplier.value);
         
         return force;
     }

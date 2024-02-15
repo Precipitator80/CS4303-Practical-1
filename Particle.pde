@@ -24,7 +24,7 @@ abstract class Particle extends GameObject {
         this.size = size;
         
         forceRegistry.add(this, gravity);
-        //forceRegistry.add(this, drag);
+        forceRegistry.add(this, drag);
     }
     
     // Add a force to the accumulator.

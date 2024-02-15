@@ -18,7 +18,7 @@ public final class Gravity extends ForceGenerator {
     PVector calculateForce(Particle particle) {
         //should check for infinite mass
         //apply mass-scaled force to the particle
-        PVector resultingForce = gravity.copy();
+        PVector resultingForce = gravity.copy().mult(OptionsMenu.gravityMultiplier.value);
         resultingForce.mult(particle.getMass());
         return resultingForce;
     }

@@ -178,18 +178,18 @@ class LevelManager {
         }
         
         wave++;
-        asteroidCount = 3 + 2 * wave;
-        minSpawnDelta = 250 + 500 / wave;
-        maxSpawnDelta =  minSpawnDelta + 500 + 5000 / wave;
+        asteroidCount = (int)((3 + 2 * wave) * OptionsMenu.asteroidSpawnCountMultiplier.value);
+        minSpawnDelta = (500 + 500 / wave) / OptionsMenu.enemySpawnRateMultiplier.value;
+        maxSpawnDelta =  minSpawnDelta + (2000 + 5000 / wave) / OptionsMenu.enemySpawnRateMultiplier.value;
         asteroidsSpawned = 0;
-        clusterChance = constrain((wave / 2 - 1) * 0.05f, 0f, 1f);
+        clusterChance = constrain((wave / 2 - 1) * 0.05f, 0f, 1f) * OptionsMenu.asteroidVariantChanceMultiplier.value;
         smartChance = clusterChance / 4;
         //clusterChance = 1f;
         minSplitTime = constrain(1000f + 1000f / wave, 1000f, 4000f);
         //minSplitTime = constrain(1500f / wave, 100f, 400f);
         maxSplitTime = minSplitTime + 3000f / wave;
         clusterSize = constrain(1 + (int)(wave * 0.2f), 2, 4);
-        flyingEnemyCount = (int) random(asteroidCount / 8 + 1);
+        flyingEnemyCount = (int)(random(asteroidCount / 8 + 1) * OptionsMenu.flyingEnemySpawnCountMultiplier.value);
         flyingEnemiesSpawned = 0;
         
         spawnAsteroids(3);       
