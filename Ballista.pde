@@ -14,7 +14,10 @@ public class Ballista extends Target {
         if (ammoRemaining > 0) {
             // Spawn the particle.
             PVector velocity = Utility.calculateStartingVelocity((int)position.x,(int)position.y, mouseX, mouseY);
-            new Bomb((int)position.x,(int)position.y, velocity);
+            
+            // Check if the player has any nuclear bombs purchased.
+            boolean nuclear = ammoRemaining > OptionsMenu.startingAmmo.value + ShopMenu.extraAmmo.timesBought - ShopMenu.nuclearBombs.timesBought;
+            new Bomb((int)position.x,(int)position.y, velocity, nuclear);
             
             // Remove ammo.
             if (!OptionsMenu.infiniteAmmo.value && levelManager.state == LevelState.LEVEL) {

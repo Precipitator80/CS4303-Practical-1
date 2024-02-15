@@ -2,6 +2,7 @@ class ShopMenu extends Menu {
     int moneySpent;
     ShopListing extraAmmo;
     ShopListing explosionSize;
+    ShopListing nuclearBombs;
     
     public ShopMenu() {
         super("Shop");
@@ -13,6 +14,9 @@ class ShopMenu extends Menu {
         
         explosionSize = new ShopListing((int) this.position.x,(int) this.position.y, "Explosion Size", 150);
         menuItems.add(explosionSize);
+        
+        nuclearBombs = new ShopListing((int) this.position.x,(int) this.position.y, "Nuclear Bombs", 750);
+        menuItems.add(nuclearBombs);
     }
     
     void resetListings() {

@@ -12,6 +12,7 @@ public class Graphics {
     PImage smartAsteroid;
     PImage bomber;
     PImage missile;
+    PImage nuclearBomb;
     PImage satellite;
     PImage ballista;
     PImage ballistaBase;
@@ -34,6 +35,7 @@ public class Graphics {
         smartAsteroid = loadImageWithFolder("SmartAsteroid.png");
         bomber = loadImageWithFolder("Bomber.png");
         missile = loadImageWithFolder("Missile.png");
+        nuclearBomb = loadImageWithFolder("NuclearBomb.png");
         satellite = loadImageWithFolder("Satellite.png");
         ballista = loadImageWithFolder("Ballista.png");
         ballistaBase = loadImageWithFolder("BallistaBase.png");
