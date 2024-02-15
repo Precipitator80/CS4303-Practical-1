@@ -21,7 +21,7 @@ public class Audio {
     
     void load() {
         alarm = loadAudioWithFolder("Alarm.mp3");
-        bigExplosion = loadAudioWithFolder("BigExplosion.mp3");
+        bigExplosion = loadAudioWithFolder("BigExplosion.wav");
         bomberMissile = loadAudioWithFolder("BomberMissile.wav");
         bomberMissileExplosion = loadAudioWithFolder("BomberMissileExplosion.wav");
         explosion = loadAudioWithFolder("Explosion.wav");
