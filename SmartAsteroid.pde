@@ -2,6 +2,7 @@ class SmartAsteroid extends Asteroid {
     Target target;
     Explosion danger;
     float safeDistance;
+    float springConstant = 0.0002f;
     boolean needRetargeting;
     public SmartAsteroid(int x, int y, PVector velocity, float invMass, float size) {
         super(x, y, velocity, invMass, size);
@@ -24,11 +25,11 @@ class SmartAsteroid extends Asteroid {
         boolean evaded = false;
         for (Explosion explosion : explosions) {
             float distance = this.position.copy().sub(explosion.position).mag();
-            float dangerDistance = this.size / 2f + explosion.maxExtent / 2f;
+            float dangerDistance = 1.75f * (this.size / 2f + explosion.maxExtent / 2f);
             if (distance < dangerDistance) {
                 danger = explosion;
                 safeDistance = 4f * dangerDistance;
-                springForce(this, explosion, safeDistance, 0.0002f);
+                springForce(this, explosion, safeDistance, springConstant);
                 evaded = true;
                 needRetargeting = true;
             }
