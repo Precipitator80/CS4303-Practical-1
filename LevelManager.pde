@@ -18,6 +18,9 @@ class LevelManager {
     float maxSplitTime;
     int clusterSize;
     
+    // Smart asteroids
+    float smartChance;
+    
     // Flying enemies
     int flyingEnemyCount;
     int flyingEnemiesSpawned;
@@ -179,7 +182,8 @@ class LevelManager {
         minSpawnDelta = 250 + 500 / wave;
         maxSpawnDelta =  minSpawnDelta + 500 + 5000 / wave;
         asteroidsSpawned = 0;
-        clusterChance = (wave / 2 - 1) * 0.05f;
+        clusterChance = constrain((wave / 2 - 1) * 0.05f, 0f, 1f);
+        smartChance = clusterChance / 4;
         //clusterChance = 1f;
         minSplitTime = constrain(1000f + 1000f / wave, 1000f, 4000f);
         //minSplitTime = constrain(1500f / wave, 100f, 400f);
@@ -218,12 +222,17 @@ class LevelManager {
                 int y = 0;
                 PVector velocity = new PVector(random( -0.001f, 0.001f), random(0.001f, 0.005f));
                 float size = height * random(0.05f, 0.075f);
-                if (random(1) < clusterChance) {    
-                    new ClusterAsteroid(x, y, velocity, 10f, size, clusterSize);
+                float random = random(1);
+                if (random < clusterChance) {
+                    if (random < smartChance) {
+                        new SmartAsteroid(x, y, velocity, 5f, size);
+                    }
+                    else{
+                        new ClusterAsteroid(x, y, velocity, 10f, size, clusterSize);
+                    }
                 }
                 else{
-                    //new Asteroid(x, y, velocity, 5f, size);
-                    new SmartAsteroid(x, y, velocity, 5f, size);
+                    new Asteroid(x, y, velocity, 5f, size);
                 }
                 
                 if (flyingEnemyCount > 0) {
