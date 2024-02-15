@@ -221,7 +221,7 @@ class LevelManager {
     void spawnAsteroids(int asteroidsToSpawn) {
         if (targets.size() > 0) {
             for (int i = 0; i < asteroidsToSpawn; i++) {
-                int x = (int)random(0, width);
+                int x = (int)random(0.1f * width, 0.9f * width);
                 int y = 0;
                 PVector velocity = new PVector(random( -0.001f, 0.001f), random(0.001f, 0.005f));
                 float size = height * random(0.05f, 0.075f);
