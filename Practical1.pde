@@ -50,20 +50,23 @@ double previous;
 double lag;
 double ms_per_update;
 
-float aspectRatio;
-
 
 void setup() {
     // Set the screen size.
     // 1:1
     //size(200, 200);
     //size(500, 500);
+    //size(720, 720);
     //size(1000,1000);
     
     // 16:9
     //size(720, 405);
-    size(1280, 720);
-    aspectRatio = (float) width / height;
+    //size(1280, 720);
+    
+    // 21:9
+    //size(1680, 720);
+    
+    fullScreen();
     
     // Initialise the update timer.    
     previous = millis();

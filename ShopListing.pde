@@ -55,9 +55,7 @@ class ShopListing extends UIItem {
     }
     
     void reset() {
-        print("Resetting shop item: " + text + " times bought before: " + timesBought);
         timesBought = 0;
-        print(". Times bought after: " + timesBought + "\n");
         currentPrice = basePrice;
     }
     

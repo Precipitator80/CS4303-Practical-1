@@ -363,8 +363,14 @@ class LevelManager {
             case 'x':
                 switchBallista(true);
                 break;
-            case 'c':
-                ballistas[selectedBallista].destroy();
+            case 'c' :
+                if (!bombs.isEmpty()) {
+                    Iterator<Bomb> iterator = bombs.iterator();
+                    while(iterator.hasNext()) {
+                        Bomb bomb = iterator.next();
+                        bomb.explosive.explode();
+                    }
+                }
                 break;
             case ' ':
                 // Explode a bomb.
