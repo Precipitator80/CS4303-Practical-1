@@ -20,7 +20,7 @@ class OptionsMenu extends Menu {
         hybridControlScheme = new BoolButton((int)position.x,(int)position.y, "Hybrid Bomb Explosion Order", true);
         menuItems.add(hybridControlScheme);
         
-        numberOfBallistas = new IntButton((int)position.x,(int)position.y, "Ballista Count", 3, 1, 6);
+        numberOfBallistas = new IntButton((int)position.x,(int)position.y, "Cannon Count", 3, 1, 6);
         menuItems.add(numberOfBallistas);
         
         startingAmmo = new IntButton((int)position.x,(int)position.y, "Starting Ammo", 10, 1, 20);
@@ -29,7 +29,7 @@ class OptionsMenu extends Menu {
         infiniteAmmo = new BoolButton((int)position.x,(int)position.y, "Infinite Ammo", false);
         menuItems.add(infiniteAmmo);
         
-        numberOfCities = new IntButton((int)position.x,(int)position.y, "City Count", 6, 1, 10);
+        numberOfCities = new IntButton((int)position.x,(int)position.y, "City Count", 6, 1, 12);
         menuItems.add(numberOfCities);
         
         creditsMultiplier = new FloatButton((int)position.x,(int)position.y, "Credits Multiplier", 1f, 0f, 10f, 0.5f);

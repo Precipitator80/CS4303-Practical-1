@@ -1,11 +1,12 @@
 class Utility{
-    // public PVector calculateStartingVelocity(int x, int y, int targetX, int targetY, float mass) {
+    // public PVector calculateStartingVelocity(int x, int y, int targetX, int targetY) {
     //     PVector velocity = new PVector(0, 0);
     
-    //     float alpha = drag.k1 / mass;
+    //     //float alpha = drag.k1 / mass;
     //     float ry = (y - targetY) / (float) height; // Vertical displacement.
-    //     float time = 300f;
-    //     float vyzero = alpha * ry - gravity.gravity.y * time;
+    //     //float time = 300f;
+    //     //float vyzero = alpha * ry - gravity.gravity.y * time;
+    //     float vyzero = -1.2f * sqrt(abs(2 * gravity.gravity.y * ry));
     //     velocity.set(0, vyzero);
     
     //     return velocity;
@@ -25,12 +26,12 @@ class Utility{
             // u = -sqrt(2aS)
             float uv= -sqrt(2 * av * sv);
             
-            // Time until max height.
+            // Timeuntil max height.
             // v = u+at
-            // at = v - u
+            // at =v - u
             // t = (v- u) / a
             // t = -u/ a
-            float t = -uv / av; 
+            float t= -uv / av; 
             
             // Initial horizontal speed.
             // d = vt
